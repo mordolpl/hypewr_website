@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <img src="${imageBasePath}pwr.png" alt="Logo PWr">
                     </a>
                 </div>
-                <div>
+                <div class="footer-info">
                     <p><strong>HYPER</strong><br><span data-i18n="footer_univ">Politechnika Wrocławska</span></p>
                 </div>
             </div>
