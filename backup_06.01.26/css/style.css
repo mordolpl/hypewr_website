@@ -1,0 +1,277 @@
+/* --- ZMIENNE I RESET --- */
+:root {
+    --bg-color: #0a0a12;
+    --card-bg: rgba(20, 25, 35, 0.7);
+    --accent-primary: #00c3ff;
+    --accent-secondary: #4a66a0;
+    --text-main: #ffffff;
+    --text-muted: #b0b8c5;
+    --font-head: 'Orbitron', sans-serif;
+    --font-body: 'Rajdhani', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: auto; }
+
+/* UKRYCIE SYSTEMOWEGO SCROLLBARA */
+body::-webkit-scrollbar { display: none; }
+body {
+    -ms-overflow-style: none; scrollbar-width: none;
+    background-color: var(--bg-color); color: var(--text-main);
+    font-family: var(--font-body); line-height: 1.7; overflow-x: hidden;
+}
+
+a { text-decoration: none; color: inherit; transition: 0.3s; }
+ul { list-style: none; }
+
+/* --- INTERAKTYWNY PASEK SCROLLA (FIX: BRAK OPÓŹNIENIA KOLORU) --- */
+.scroll-track-container {
+    position: fixed; right: 20px; top: 10vh; height: 80vh; width: 6px;
+    background: rgba(255, 255, 255, 0.1); z-index: 1001; border-radius: 10px; cursor: pointer;
+}
+.scroll-pod-indicator {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    width: 18px; height: 35px; background: var(--accent-primary);
+    border-radius: 4px; top: 0%; 
+    box-shadow: 0 0 15px var(--accent-primary);
+    cursor: grab;
+    /* Transition tylko dla pozycji (top), kolor zmienia się natychmiast */
+    transition: top 0.1s ease-out; 
+}
+.scroll-pod-indicator::after {
+    content: ''; position: absolute; bottom: -6px; left: 0; width: 100%; height: 12px;
+    background: inherit; /* Dziedziczy kolor rodzica */
+    border-radius: 0 0 50% 50%;
+}
+/* Stan aktywny (wciśnięcie) */
+.scroll-pod-indicator:active { 
+    cursor: grabbing; 
+    background: #ffffff !important; 
+    box-shadow: 0 0 20px #ffffff;
+}
+/* Wymuszenie zmiany koloru dziobka przy kliknięciu */
+.scroll-pod-indicator:active::after {
+    background: #ffffff !important;
+}
+
+
+/* --- NAWIGACJA (Z HAMBURGEREM) --- */
+nav {
+    position: fixed; top: 0; width: 100%; padding: 20px 50px;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 1000; background: rgba(10, 10, 18, 0.95); backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.logo { font-family: var(--font-head); font-size: 1.5rem; font-weight: 700; letter-spacing: 1px; z-index: 1002; }
+.logo span { color: var(--accent-primary); }
+
+/* Kontener menu desktopowego */
+.nav-container { display: flex; align-items: center; gap: 30px; }
+
+.nav-links { display: flex; gap: 30px; }
+.nav-links a { font-size: 0.95rem; font-weight: 600; text-transform: uppercase; opacity: 0.8; }
+.nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--accent-primary); }
+
+.lang-switch {
+    display: flex; gap: 10px; font-size: 0.9rem; font-weight: 600;
+    border-left: 1px solid rgba(255,255,255,0.2); padding-left: 20px;
+}
+.lang-btn { cursor: pointer; color: var(--text-muted); transition: 0.3s; }
+.lang-btn:hover { color: #fff; }
+.lang-btn.active { color: var(--accent-primary); text-shadow: 0 0 10px var(--accent-primary); }
+
+/* Hamburger Icon (Ukryty na desktopie) */
+.hamburger { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 1002; }
+.bar { width: 30px; height: 3px; background-color: #fff; transition: 0.3s; border-radius: 2px; }
+
+
+/* --- HERO & HEADER --- */
+header {
+    height: 100vh; position: relative; display: flex; flex-direction: column;
+    justify-content: center; padding: 0 10%; overflow: hidden;
+}
+header.sub-hero { height: 50vh; justify-content: flex-end; padding-bottom: 60px; }
+header.sub-hero h1 { font-size: 3rem; }
+
+#bg-video, .hero-bg-img {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover; z-index: -2;
+}
+.video-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(45deg, rgba(10,10,18,0.95), rgba(10,10,18,0.6)); z-index: -1;
+}
+.hero-content { z-index: 10; max-width: 800px; animation: fadeInUp 1s forwards; opacity: 0; transform: translateY(30px); }
+h1 { font-family: var(--font-head); font-size: 3.8rem; font-weight: 700; text-transform: uppercase; margin-bottom: 20px; line-height: 1.1; }
+.subtitle { font-size: 1.3rem; color: var(--text-muted); margin-bottom: 40px; }
+
+
+/* --- BUTTONS & FORMS --- */
+.cta-btn {
+    padding: 15px 40px; font-weight: 600; background: var(--accent-primary); color: #000;
+    text-transform: uppercase; letter-spacing: 2px; border-radius: 4px; display: inline-block; cursor: pointer; border: none;
+}
+.cta-btn:hover { background: #33d1ff; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0, 195, 255, 0.4); }
+.cta-btn.outline { background: transparent; border: 1px solid var(--accent-primary); color: var(--accent-primary); }
+.cta-btn.outline:hover { background: var(--accent-primary); color: #000; }
+
+input, textarea {
+    width: 100%; padding: 15px; margin-bottom: 20px;
+    background: rgba(255,255,255,0.05); border: 1px solid #333;
+    color: #fff; font-family: var(--font-body); resize: vertical;
+}
+input:focus, textarea:focus { border-color: var(--accent-primary); outline: none; }
+
+
+/* --- SEKCJE OGÓLNE --- */
+.section { padding: 100px 10%; position: relative; }
+.section-title { font-family: var(--font-head); font-size: 2.2rem; margin-bottom: 10px; }
+.title-bar { width: 60px; height: 4px; background: var(--accent-primary); margin-bottom: 60px; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: stretch; }
+
+.card {
+    background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 30px; border-radius: 12px; transition: 0.3s; position: relative; overflow: hidden;
+    height: 100%; display: flex; flex-direction: column;
+}
+.card:hover { transform: translateY(-5px); border-color: var(--accent-primary); }
+
+.image-placeholder {
+    width: calc(100% + 60px); height: 300px;
+    background-color: #222; background-size: cover; background-position: center;
+    margin: -30px -30px 20px -30px; display: flex; align-items: center; justify-content: center;
+    color: #555; border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.team-avatar {
+    width: 180px; height: 180px; background-size: cover; background-position: center;
+    border-radius: 50%; margin: 0 auto 30px; border: 3px solid var(--accent-primary);
+    box-shadow: 0 0 20px rgba(0, 195, 255, 0.2);
+}
+
+.sponsors-grid { display: flex; flex-wrap: wrap; gap: 50px; justify-content: center; align-items: center; }
+.sponsor-logo {
+    width: 200px; height: 100px; background: rgba(255,255,255,0.05);
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 8px; filter: grayscale(100%); transition: 0.4s; opacity: 0.6;
+}
+.sponsor-logo:hover { filter: grayscale(0%); opacity: 1; background: rgba(255,255,255,0.1); }
+.social-links a { margin-right: 15px; color: var(--text-muted); font-size: 1.1rem; }
+.social-links a:hover { color: var(--accent-primary); text-shadow: 0 0 10px var(--accent-primary); }
+
+
+/* --- TIMELINE 3.0 (PERFECT CENTER & SOLID CONNECTIONS) --- */
+.timeline {
+    position: relative; margin: 40px 0;
+}
+.timeline-item {
+    position: relative; margin-bottom: 0; 
+    padding-bottom: 50px; /* Miejsce na linię */
+    padding-left: 70px; /* Miejsce na kropki po lewej */
+}
+
+/* KROPKA: Center axis = 25px. Width 14px -> left: 18px */
+.timeline-item::before {
+    content: ''; position: absolute;
+    left: 18px; top: 0;
+    width: 10px; height: 10px;
+    background: var(--bg-color); border: 2px solid var(--accent-primary);
+    border-radius: 50%; box-shadow: 0 0 10px var(--accent-primary);
+    z-index: 2;
+}
+
+/* LINIA: Center axis = 25px. Width 2px -> left: 24px */
+.timeline-item::after {
+    content: ''; position: absolute;
+    left: 24px; top: 15px;
+    width: 2px; height: 100%; 
+    background: var(--accent-primary); /* Solidna linia */
+    z-index: 1;
+}
+
+/* OSTATNI ELEMENT: Gradientowy ogon */
+.timeline-item:last-child { padding-bottom: 0; margin-bottom: 0; }
+.timeline-item:last-child::after {
+    height: 120px; /* Długość zanikania */
+    background: linear-gradient(to bottom, var(--accent-primary), transparent);
+}
+
+.timeline-date { font-family: var(--font-head); color: var(--accent-primary); font-size: 1.1rem; margin-bottom: 10px; }
+.timeline-content {
+    background: rgba(255,255,255,0.03); padding: 20px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);
+}
+.timeline-content h3 { font-size: 1.2rem; margin-bottom: 10px; }
+
+
+/* --- HUD PANEL --- */
+.hud-panel {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    background: rgba(0, 195, 255, 0.05); border-top: 1px solid var(--accent-primary); border-bottom: 1px solid var(--accent-primary);
+    padding: 40px 0; margin-top: 80px; position: relative;
+}
+.hud-panel::after {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(0, 195, 255, 0.05) 3px);
+    pointer-events: none;
+}
+.hud-item { text-align: center; border-right: 1px solid rgba(255,255,255,0.1); }
+.hud-item:last-child { border-right: none; }
+.hud-value { font-family: var(--font-head); font-size: 2.5rem; color: #fff; display: block; }
+.hud-label { color: var(--accent-primary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
+
+
+/* --- FOOTER --- */
+footer {
+    padding: 60px 10%; background: #050508; border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex; justify-content: space-between; align-items: center;
+    color: var(--text-muted); font-size: 0.9rem;
+}
+.footer-left { display: flex; align-items: center; gap: 30px; }
+.footer-logos img { height: 50px; width: auto; opacity: 0.8; transition: 0.3s; }
+.footer-logos img:hover { opacity: 1; }
+
+
+/* --- ANIMACJE --- */
+@keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease; }
+.reveal.active { opacity: 1; transform: translateY(0); }
+
+
+/* --- RWD (MOBILE) --- */
+@media (max-width: 900px) {
+    h1 { font-size: 2.5rem; }
+    nav { padding: 20px; }
+    
+    /* Hamburger widoczny */
+    .hamburger { display: flex; }
+    
+    /* Menu mobilne */
+    .nav-container {
+        position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
+        background: rgba(5, 5, 5, 0.98); backdrop-filter: blur(20px);
+        flex-direction: column; justify-content: center; align-items: center;
+        transition: 0.4s ease-in-out; z-index: 1001;
+    }
+    .nav-container.active { right: 0; }
+    
+    .nav-links { flex-direction: column; align-items: center; gap: 40px; margin-bottom: 40px; }
+    .nav-links a { font-size: 1.5rem; }
+    .lang-switch { border-left: none; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px; padding-left: 0; }
+
+    /* Animacja hamburgera */
+    .hamburger.active .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+    .hamburger.active .bar:nth-child(2) { opacity: 0; }
+    .hamburger.active .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+    /* Fixy kontentu */
+    .grid-2, .hud-panel { grid-template-columns: 1fr; }
+    .scroll-track-container { display: none; }
+    body { -ms-overflow-style: auto; scrollbar-width: auto; }
+    body::-webkit-scrollbar { display: block; }
+    .hud-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 20px 0; }
+    
+    /* Fix Stopki Mobile */
+    footer { flex-direction: column; gap: 30px; text-align: center; }
+    .footer-left { flex-direction: column; }
+    .footer-right { text-align: center !important; }
+}

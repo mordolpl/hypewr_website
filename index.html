@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HYPEwR | Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="scroll-track-container"><div class="scroll-pod-indicator" id="scrollPod"></div></div>
+
+    <div id="nav-placeholder"></div>
+
+    <header>
+        <video autoplay muted loop playsinline id="bg-video">
+            <source src="media/videos/video.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+        <div class="hero-content">
+            <h1 data-i18n="hero_title">Przyszłość<br>Transportu</h1>
+            <p class="subtitle" data-i18n="hero_subtitle">Tworzymy kolej magnetyczną nowej generacji. Szybciej. Ekologiczniej. Bliżej.</p>
+            <a href="pages/projekty.php" class="cta-btn" data-i18n="hero_cta">Zobacz Projekty</a>
+        </div>
+    </header>
+
+    <section class="section">
+        <h2 class="section-title reveal" data-i18n="mission_title">Nasza Misja</h2>
+        <div class="title-bar reveal"></div>
+        
+        <div class="grid-2 reveal">
+            <div style="display: flex; flex-direction: column; justify-content: center;">
+                <h3 style="font-size: 1.5rem; margin-bottom: 20px;" data-i18n="mission_head">Rewolucja zaczyna się we Wrocławiu</h3>
+                <p data-i18n="mission_text_1">Nie budujemy tylko pojazdu. Tworzymy nowy standard podróżowania. Naszym celem jest opracowanie technologii <strong>Hyperloop</strong> – piątego środka transportu, który połączy zalety prędkości samolotu z wygodą kolei.</p>
+                <p style="margin-top: 20px;" data-i18n="mission_text_2">Jako zespół inżynierów z Politechniki Wrocławskiej, skupiamy się na trzech filarach:</p>
+                <ul style="margin-top: 15px; margin-left: 20px;">
+                    <li style="margin-bottom: 10px;" data-i18n="mission_list_1">➤ <strong>Innowacja:</strong> Autorski silnik liniowy i lewitacja.</li>
+                    <li style="margin-bottom: 10px;" data-i18n="mission_list_2">➤ <strong>Precyzja:</strong> Kompozytowe poszycie o mikronowej dokładności.</li>
+                    <li data-i18n="mission_list_3">➤ <strong>Skalowalność:</strong> Rozwiązania gotowe do wdrożenia w przemyśle.</li>
+                </ul>
+            </div>
+            
+            <div class="card" style="border-color: var(--accent-primary);">
+                <h3 style="color: #fff; font-size: 1.8rem; margin-bottom: 10px;" data-i18n="card_ehw_title">European Hyperloop Week</h3>
+                <p style="color: var(--text-muted);" data-i18n="card_ehw_desc">Naszym głównym celem na ten rok jest dominacja podczas międzynarodowych zawodów EHW. Rywalizujemy z najlepszymi uczelniami z całego świata.</p>
+                <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 0.9rem;" data-i18n="card_ehw_edition">EDYCJA 2026</span>
+                    <span style="color: var(--accent-primary); font-weight: bold;" data-i18n="card_ehw_loc">Veendam, NL</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background: rgba(255,255,255,0.01);">
+        <h2 class="section-title reveal" data-i18n="timeline_title">Roadmap & Aktualności</h2>
+        <div class="title-bar reveal"></div>
+
+        <div class="grid-2 reveal">
+            <div>
+                <h3 style="margin-bottom: 30px; color: var(--text-muted);" data-i18n="timeline_head_left">Oś Czasu Projektu</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date" data-i18n="event_1_date">Styczeń 2025</div>
+                        <div class="timeline-content">
+                            <h3 data-i18n="event_1_title">Testy Silnika LIM</h3>
+                            <p style="font-size: 0.9rem; color: var(--text-muted);" data-i18n="event_1_desc">Pomyślne zakończenie testów statycznych nowego napędu liniowego. Osiągnięto 110% zakładanego ciągu.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date" data-i18n="event_2_date">Marzec 2025</div>
+                        <div class="timeline-content">
+                            <h3 data-i18n="event_2_title">Premiera Poszycia V1</h3>
+                            <p style="font-size: 0.9rem; color: var(--text-muted);" data-i18n="event_2_desc">Prezentacja nowej, aerodynamicznej kapsuły wykonanej w całości z włókna węglowego.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date" data-i18n="event_3_date">Lipiec 2025</div>
+                        <div class="timeline-content">
+                            <h3 data-i18n="event_3_title">European Hyperloop Week</h3>
+                            <p style="font-size: 0.9rem; color: var(--text-muted);" data-i18n="event_3_desc">Wyjazd zespołu do Zurychu na finały zawodów. Demonstracja lewitacji i jazdy w próżni.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 style="margin-bottom: 30px; color: var(--text-muted);" data-i18n="news_head_right">Wyróżnione Wydarzenie</h3>
+                <div class="card" style="padding: 0; height: auto;">
+                    <div class="image-placeholder" style="height: 250px; margin: 0; width: 100%; background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000');"></div>
+                    <div style="padding: 30px;">
+                        <span style="background: var(--accent-primary); color: #000; padding: 2px 8px; font-size: 0.8rem; font-weight: bold; border-radius: 2px;">NEWS</span>
+                        <h3 style="margin: 15px 0;" data-i18n="news_title">Nowe Laboratorium Próżniowe</h3>
+                        <p style="color: var(--text-muted); margin-bottom: 20px;" data-i18n="news_desc">Dzięki wsparciu naszych sponsorów otworzyliśmy nowe laboratorium dedykowane testom w warunkach obniżonego ciśnienia. To milowy krok w rozwoju projektu HYPEwR.</p>
+                        <a href="#" style="color: var(--accent-primary); font-weight: bold;" data-i18n="news_link">Czytaj więcej -></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="reveal">
+        <div class="hud-panel">
+            <div class="hud-item">
+                <span class="hud-value">550 km/h</span>
+                <span class="hud-label" data-i18n="hud_speed">Prędkość Projektowa</span>
+            </div>
+            <div class="hud-item">
+                <span class="hud-value">14 os.</span>
+                <span class="hud-label" data-i18n="hud_team">Członków Zespołu</span>
+            </div>
+            <div class="hud-item">
+                <span class="hud-value">0 g</span>
+                <span class="hud-label" data-i18n="hud_co2">Emisji CO2</span>
+            </div>
+            <div class="hud-item">
+                <span class="hud-value">2026</span>
+                <span class="hud-label" data-i18n="hud_year">Rok Wdrożenia V1</span>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+    <script src="js/script.js"></script>
+</body>
+</html>
