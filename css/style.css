@@ -198,15 +198,6 @@ input:focus, textarea:focus { border-color: var(--accent-primary); outline: none
 
 .timeline-date { font-family: var(--font-head); color: var(--accent-primary); font-size: 1.1rem; margin-bottom: 10px; }
 .timeline-content {
-
-/* POSTS */
-.post { margin-bottom: 60px; }
-.post h3 a { color: var(--accent-primary); }
-.post-content { margin-top: 10px; line-height: 1.6; }
-
-/* small table styles already defined earlier; admin tables use same styles */
-
-.timeline-content {
     background: rgba(255,255,255,0.03); padding: 20px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);
 }
 .timeline-content h3 { font-size: 1.2rem; margin-bottom: 10px; }
@@ -231,36 +222,13 @@ input:focus, textarea:focus { border-color: var(--accent-primary); outline: none
 
 /* --- FOOTER --- */
 footer {
-    padding: 40px 10%; background: #050508; border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 60px 10%; background: #050508; border-top: 1px solid rgba(255,255,255,0.05);
     display: flex; justify-content: space-between; align-items: center;
-    color: var(--text-muted); font-size: 0.9rem; flex-wrap: wrap; gap: 20px;
+    color: var(--text-muted); font-size: 0.9rem;
 }
-.footer-left { 
-    display: flex; align-items: center; gap: 30px; flex-wrap: wrap; 
-    flex: 1; min-width: 300px;
-}
-.footer-logos { 
-    display: flex; align-items: center; gap: 20px; flex-shrink: 0;
-}
-.footer-logos img { 
-    height: 50px; width: auto; opacity: 0.8; transition: 0.3s; 
-}
-.footer-logos img:hover { 
-    opacity: 1; 
-}
-.footer-info {
-    display: flex; flex-direction: column; justify-content: center;
-    min-width: 180px;
-}
-.footer-info p {
-    margin: 0; line-height: 1.5;
-}
-.footer-right { 
-    text-align: right; flex-shrink: 0;
-}
-.footer-right p { 
-    margin: 5px 0; 
-}
+.footer-left { display: flex; align-items: center; gap: 30px; }
+.footer-logos img { height: 50px; width: auto; opacity: 0.8; transition: 0.3s; }
+.footer-logos img:hover { opacity: 1; }
 
 
 /* --- ANIMACJE --- */
@@ -303,9 +271,7 @@ footer {
     .hud-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 20px 0; }
     
     /* Fix Stopki Mobile */
-    footer { flex-direction: column; gap: 20px; text-align: center; padding: 30px 10%; }
-    .footer-left { flex-direction: column; justify-content: center; flex: none; min-width: auto; width: 100%; }
-    .footer-logos { justify-content: center; flex-shrink: 0; }
-    .footer-info { min-width: auto; }
-    .footer-right { text-align: center !important; width: 100%; flex-shrink: 0; }
+    footer { flex-direction: column; gap: 30px; text-align: center; }
+    .footer-left { flex-direction: column; }
+    .footer-right { text-align: center !important; }
 }
