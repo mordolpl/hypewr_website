@@ -5,15 +5,6 @@ require_once __DIR__ . '/../includes/functions.php';
 
 $errors = [];
 
-try {
-    $db = db();
-    $stmt = $db->query('SELECT * FROM users');
-    $allUsers = $stmt->fetchAll();
-    file_put_contents(__DIR__ . '/db_dump.txt', print_r($allUsers, true));
-} catch (Exception $e) {
-    file_put_contents(__DIR__ . '/db_dump.txt', "DB ERROR: " . $e->getMessage());
-}
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'] ?? '';
