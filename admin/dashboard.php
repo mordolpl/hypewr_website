@@ -30,6 +30,24 @@ if (isset($_GET['delete'])) {
 }
 
 $posts = getPosts();
+
+// --- FETCH DASHBOARD STATISTICS ---
+$db = db();
+
+// Total posts
+$totalStmt = $db->query('SELECT COUNT(*) FROM posts');
+$totalPosts = (int)$totalStmt->fetchColumn();
+
+// Most popular post (by views)
+$popStmt = $db->query('SELECT title, views FROM posts ORDER BY views DESC LIMIT 1');
+$popularPost = $popStmt->fetch();
+$popTitle = $popularPost ? $popularPost['title'] : 'Brak';
+$popViews = $popularPost ? (int)$popularPost['views'] : 0;
+
+// Last updated date
+$updateStmt = $db->query('SELECT MAX(updated_at) FROM posts');
+$lastUpdateRow = $updateStmt->fetchColumn();
+$lastUpdate = $lastUpdateRow ? date('d.m.Y', strtotime($lastUpdateRow)) : 'Nigdy';
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -47,6 +65,25 @@ $posts = getPosts();
     </div>
 
     <p><a href="post_form.php" class="button">Dodaj nowy wpis</a></p>
+
+    <!-- DASHBOARD STATS ROW -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 40px; margin-top: 30px;">
+        <div style="background: #fff; border: 1px solid var(--border-color); border-radius: 8px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: center;">
+            <span style="color: var(--text-muted); font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Razem Wpisów</span>
+            <span style="color: var(--text-main); font-size: 2.2rem; font-weight: 700;"><?= $totalPosts ?></span>
+        </div>
+        
+        <div style="background: #fff; border: 1px solid var(--border-color); border-radius: 8px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: center;">
+            <span style="color: var(--text-muted); font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Najpopularniejszy Wpis</span>
+            <span style="color: var(--text-main); font-size: 1.2rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="<?= htmlspecialchars($popTitle) ?>"><?= htmlspecialchars($popTitle) ?></span>
+            <span style="color: var(--primary-color); font-size: 0.9rem; font-weight: 600; margin-top: 5px;">👁️ <?= $popViews ?> odsłon</span>
+        </div>
+        
+        <div style="background: #fff; border: 1px solid var(--border-color); border-radius: 8px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: center;">
+            <span style="color: var(--text-muted); font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Ostatnia Aktualizacja</span>
+            <span style="color: var(--text-main); font-size: 1.6rem; font-weight: 700;"><?= $lastUpdate ?></span>
+        </div>
+    </div>
 
     <?php if (count($posts) === 0): ?>
         <p>Brak wpisów w bazie.</p>

@@ -90,11 +90,29 @@ try {
         <?php if (empty($posts)): ?>
             <p>Brak aktualności do wyświetlenia.</p>
         <?php else: ?>
+            
+            <!-- CATEGORY FILTER BUTTONS -->
+            <?php 
+                $categories = array_unique(array_column($posts, 'category')); 
+                sort($categories);
+            ?>
+            <div class="category-filters" style="margin-bottom: 40px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                <button class="filter-btn active" data-filter="all" style="padding: 8px 16px; min-width: 80px; border-radius: 20px; border: 1px solid var(--accent-primary); background: var(--accent-primary); color: #000; font-family: var(--font-head); font-weight: bold; cursor: pointer; transition: 0.3s;">Wszystkie</button>
+                <?php foreach ($categories as $cat): if(empty($cat)) continue; ?>
+                    <button class="filter-btn" data-filter="<?= htmlspecialchars($cat) ?>" style="padding: 8px 16px; min-width: 80px; border-radius: 20px; border: 1px solid var(--accent-primary); background: transparent; color: var(--accent-primary); font-family: var(--font-head); font-weight: bold; cursor: pointer; transition: 0.3s;"><?= htmlspecialchars($cat) ?></button>
+                <?php endforeach; ?>
+            </div>
+            
             <div class="grid-3 reveal">
                 <?php foreach ($posts as $post): ?>
-                    <div class="card">
+                    <div class="card post-item" data-category="<?= htmlspecialchars($post['category'] ?? 'Inne') ?>">
                         <?php $coverUrl = !empty($post['cover_image']) ? htmlspecialchars($post['cover_image']) : 'https://images.unsplash.com/photo-1495020689067-958852a7765e?q=80&w=800'; ?>
-                        <div class="image-placeholder" style="background-image: url('<?= $coverUrl ?>');"></div>
+                        <div class="image-placeholder" style="background-image: url('<?= $coverUrl ?>'); position: relative;">
+                            <!-- Category Badge -->
+                            <div style="position: absolute; top: 15px; right: 15px; background: var(--accent-primary); color: #000; padding: 4px 12px; font-family: var(--font-head); font-size: 0.8rem; font-weight: bold; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+                                <?= htmlspecialchars($post['category'] ?? 'Inne') ?>
+                            </div>
+                        </div>
                         <h3 class="card-title" style="font-family: var(--font-head); margin-bottom: 5px;"><?= htmlspecialchars($post['title']) ?></h3>
                         <small style="color: var(--accent-primary); margin-bottom: 15px; display:block; font-family: var(--font-head); font-size: 0.85rem; letter-spacing: 1px;"><?= date('Y-m-d H:i', strtotime($post['created_at'])) ?></small>
                         <p class="card-description" style="color: var(--text-muted); margin-bottom: 25px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
@@ -104,6 +122,40 @@ try {
                     </div>
                 <?php endforeach; ?>
             </div>
+            
+            <script>
+                // Category Filtering Logic
+                document.addEventListener('DOMContentLoaded', () => {
+                    const filterBtns = document.querySelectorAll('.filter-btn');
+                    const postItems = document.querySelectorAll('.post-item');
+
+                    filterBtns.forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            // Update active button styles
+                            filterBtns.forEach(b => {
+                                b.style.background = 'transparent';
+                                b.style.color = 'var(--accent-primary)';
+                            });
+                            btn.style.background = 'var(--accent-primary)';
+                            btn.style.color = '#000';
+
+                            const filterValue = btn.getAttribute('data-filter');
+
+                            // Filter the grid items
+                            postItems.forEach(item => {
+                                if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                                    item.style.display = 'flex';
+                                    // Slight fade in animation re-trigger for polish
+                                    item.style.opacity = '0';
+                                    setTimeout(() => { item.style.transition = 'opacity 0.3s ease'; item.style.opacity = '1'; }, 10);
+                                } else {
+                                    item.style.display = 'none';
+                                }
+                            });
+                        });
+                    });
+                });
+            </script>
         <?php endif; ?>
     </section>
 

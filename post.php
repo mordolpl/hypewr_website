@@ -12,6 +12,11 @@ if (!$post) {
     exit;
 }
 
+// Podbicie licznika wyświetleń
+incrementPostViews($id);
+// Odświeżenie danych posta żeby pokazać zaktualizowaną liczbę
+$post['views'] = ($post['views'] ?? 0) + 1;
+
 // Przygotowanie danych do meta tagów
 $plain_text = strip_tags($post['content']);
 // Usunięcie nadmiarowych białych znaków i przycięcie do ok. 150 znaków
@@ -75,6 +80,8 @@ if ($reading_time_minutes < 1) $reading_time_minutes = 1;
                 <time><?= date('d.m.Y H:i', strtotime($post['created_at'])) ?></time>
                 <span style="width: 5px; height: 5px; background: var(--accent-primary); border-radius: 50%;"></span>
                 <span>⏳ <?= $reading_time_minutes ?> min czytania</span>
+                <span style="width: 5px; height: 5px; background: var(--accent-primary); border-radius: 50%;"></span>
+                <span>👁️ <?= (int)($post['views'] ?? 0) ?> odsłon</span>
             </div>
         </div>
     </header>

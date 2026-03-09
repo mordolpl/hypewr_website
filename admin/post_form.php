@@ -8,7 +8,7 @@ if (empty($_SESSION['user_id'])) {
 }
 
 $edit = false;
-$post = ['title' => '', 'content' => '', 'author' => $_SESSION['username'] ?? 'Administrator', 'cover_image' => ''];
+$post = ['title' => '', 'content' => '', 'author' => $_SESSION['username'] ?? 'Administrator', 'cover_image' => '', 'category' => 'Inne'];
 
 if (isset($_GET['id'])) {
     $edit = true;
@@ -27,15 +27,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $content = trim($_POST['content'] ?? '');
     $author = trim($_POST['author'] ?? 'Administrator');
     $cover_image = trim($_POST['cover_image'] ?? '');
+    $category = trim($_POST['category'] ?? 'Inne');
     
     if ($title === '' || $content === '') {
         $errors[] = 'Tytuł i treść są wymagane.';
     }
     if (empty($errors)) {
         if ($edit) {
-            updatePost($id, $title, $content, $author, $cover_image);
+            updatePost($id, $title, $content, $author, $cover_image, $category);
         } else {
-            createPost($title, $content, $author, $cover_image);
+            createPost($title, $content, $author, $cover_image, $category);
         }
         header('Location: dashboard.php');
         exit;
@@ -179,7 +180,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="text" class="title-input" id="title" name="title" placeholder="Wpisz tytuł artykułu..." value="<?= htmlspecialchars($post['title']) ?>" required style="background: transparent;">
         
         <div style="display: flex; gap: 20px;">
-            <input type="text" class="title-input" id="author" name="author" placeholder="Autor publikacji..." value="<?= htmlspecialchars($post['author']) ?>" style="font-size: 1.1rem; padding: 10px 0; margin-bottom: 30px; flex: 1; background: transparent;">
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px;">
+                <input type="text" class="title-input" id="author" name="author" placeholder="Autor publikacji..." value="<?= htmlspecialchars($post['author']) ?>" style="font-size: 1.1rem; padding: 10px 0; background: transparent;">
+                
+                <select name="category" id="category" style="font-size: 1.1rem; padding: 10px; background: #fff; border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-main); font-family: var(--font-body); width: 100%;">
+                    <?php 
+                        $categories = ['Integrot', 'IT', 'Mechanika', 'Elektronika', 'Wydarzenia', 'Inne'];
+                        foreach ($categories as $cat): 
+                            $selected = ($post['category'] === $cat) ? 'selected' : '';
+                    ?>
+                        <option value="<?= htmlspecialchars($cat) ?>" <?= $selected ?>><?= htmlspecialchars($cat) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
             
             <div style="flex: 2; display: flex; flex-direction: column;">
                 <input type="text" class="title-input" id="cover_image_url" placeholder="URL okładki (lub wgraj plik poniżej) -> domyślnie kosmos" value="<?= htmlspecialchars($post['cover_image']) ?>" style="font-size: 1.1rem; padding: 10px 0; margin-bottom: 5px; background: transparent;">
