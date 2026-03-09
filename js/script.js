@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "nav_contact": "Kontakt",
             
             // strony
-            "projekty_title": "HYPEwR | Projekty",
+            "projekty_title": "HYPER | Projekty",
             "projekty_h1": "Nasze Projekty",
 
             // Hero (Strona główna)
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "nav_contact": "Contact",
 
             // pages
-            "projekty_title": "HYPEwR | Projects",
+            "projekty_title": "HYPER | Projects",
             "projekty_h1": "Our Projects",
 
             // Hero
@@ -191,8 +191,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="nav-links">
                     <a href="${currentPath === 'index.html' ? 'index.html' : '../index.html'}" class="${currentPath === 'index.html' ? 'active' : ''}" data-i18n="nav_home">Home</a>
                     <a href="${currentPath === 'index.html' ? 'pages/projekty.php' : 'projekty.php'}" class="${currentPath === 'projekty.php' || currentPath === 'projekty.html' || currentPath === 'post.php' ? 'active' : ''}" data-i18n="nav_projects">Projekty</a>
-                    <a href="${currentPath === 'index.html' ? 'pages/zespol.html' : 'zespol.html'}" class="${currentPath === 'zespol.html' ? 'active' : ''}" data-i18n="nav_team">Zespół</a>
-                    <a href="${currentPath === 'index.html' ? 'pages/sponsorzy.html' : 'sponsorzy.html'}" class="${currentPath === 'sponsorzy.html' ? 'active' : ''}" data-i18n="nav_sponsors">Sponsorzy</a>
                     <a href="${currentPath === 'index.html' ? 'pages/rekrutacja.html' : 'rekrutacja.html'}" class="${currentPath === 'rekrutacja.html' ? 'active' : ''}" data-i18n="nav_recruitment">Rekrutacja</a>
                     <a href="${currentPath === 'index.html' ? 'pages/kontakt.html' : 'kontakt.html'}" class="${currentPath === 'kontakt.html' ? 'active' : ''}" data-i18n="nav_contact">Kontakt</a>
                 </div>
@@ -217,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <footer>
             <div class="footer-left">
                 <div class="footer-logos">
-                    <a href="https://hyper.pwr.edu.pl/" style="text-decoration: none;">
+                    <a href="https://hypewr.pwr.edu.pl/" style="text-decoration: none;">
                         <img src="${imageBasePath}logo.png" alt="Logo HYPER" style="margin-right: 20px;">
                     </a>
                     <a href="https://pwr.edu.pl/" style="text-decoration: none;">
@@ -229,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
             <div class="footer-right">
-                <p>kn.hyper@pwr.edu.pl</p>
+                <p>kn.hypewr@pwr.edu.pl</p>
                 <p style="opacity: 0.5; margin-top: 5px;" data-i18n="footer_rights">&copy; ${new Date().getFullYear()} Koło Naukowe HYPER.</p>
             </div>
         </footer>
