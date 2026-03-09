@@ -46,6 +46,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $edit ? 'Edytuj wpis' : 'Dodaj wpis' ?></title>
     <link rel="stylesheet" href="admin-style.css">
+    
+    <!-- TinyMCE CDN -->
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+      tinymce.init({
+        selector: '#content',
+        plugins: 'advlist autolink lists link image charmap preview anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking table emoticons template help',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+        height: 500,
+        // Umożliwiamy wrzucanie zdjęć bez zewnętrznych API - TinyMCE zamieni je na Base64 Data URI
+        automatic_uploads: true,
+        images_upload_handler: function (blobInfo, success, failure) {
+            // Zwracamy zdjęcie na żywo jako Base64 zakodowane w znaczniku <img src="...">
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(blobInfo.blob());
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        },
+        setup: function (editor) {
+            editor.on('change', function () {
+                editor.save();
+            });
+        }
+      });
+    </script>
 </head>
 <body>
 <div class="form-box">

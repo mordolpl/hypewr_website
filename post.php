@@ -26,7 +26,7 @@ if (!$post) {
         <h1><?= htmlspecialchars($post['title']) ?></h1>
         <small><?= date('Y-m-d H:i', strtotime($post['created_at'])) ?></small>
         <div class="post-content">
-            <?= nl2br(htmlspecialchars($post['content'])) ?>
+            <?= $post['content'] ?>
         </div>
     </article>
     <div id="footer-placeholder"></div>
