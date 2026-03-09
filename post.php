@@ -27,6 +27,11 @@ if (preg_match('/<img.+src=[\'"](?P<src>.+?)[\'"].*>/i', $post['content'], $matc
 // Pobranie aktualnego URL dla og:url
 $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
+// Obliczenie czasu czytania
+$word_count = str_word_count(strip_tags($post['content']));
+$reading_time_minutes = ceil($word_count / 200); // Zakładamy średnie tempo 200 słów/minutę
+if ($reading_time_minutes < 1) $reading_time_minutes = 1;
+
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -62,10 +67,12 @@ $current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https"
         <div class="video-overlay"></div>
         <div class="hero-content" style="z-index: 10; max-width: 1200px; padding: 0 40px; width: 100%;">
             <h1 style="font-size: 3.5rem; margin-bottom: 15px; text-shadow: 0 4px 20px rgba(0,195,255,0.4);"><?= htmlspecialchars($post['title']) ?></h1>
-            <div style="display: flex; justify-content: center; align-items: center; gap: 10px; color: var(--accent-primary); font-family: var(--font-head); letter-spacing: 2px; font-size: 1rem;">
-                <span>PUBLIKACJA</span>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 15px; color: var(--accent-primary); font-family: var(--font-head); letter-spacing: 1px; font-size: 1rem; flex-wrap: wrap;">
+                <span><svg style="width: 16px; height: 16px; vertical-align: middle; margin-right: 5px;" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg><?= htmlspecialchars($post['author'] ?? 'Administrator') ?></span>
                 <span style="width: 5px; height: 5px; background: var(--accent-primary); border-radius: 50%;"></span>
                 <time><?= date('d.m.Y H:i', strtotime($post['created_at'])) ?></time>
+                <span style="width: 5px; height: 5px; background: var(--accent-primary); border-radius: 50%;"></span>
+                <span>⏳ <?= $reading_time_minutes ?> min czytania</span>
             </div>
         </div>
     </header>

@@ -8,7 +8,7 @@ if (empty($_SESSION['user_id'])) {
 }
 
 $edit = false;
-$post = ['title' => '', 'content' => ''];
+$post = ['title' => '', 'content' => '', 'author' => $_SESSION['username'] ?? 'Administrator'];
 
 if (isset($_GET['id'])) {
     $edit = true;
@@ -25,14 +25,16 @@ $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = trim($_POST['title'] ?? '');
     $content = trim($_POST['content'] ?? '');
+    $author = trim($_POST['author'] ?? 'Administrator');
+    
     if ($title === '' || $content === '') {
         $errors[] = 'Tytuł i treść są wymagane.';
     }
     if (empty($errors)) {
         if ($edit) {
-            updatePost($id, $title, $content);
+            updatePost($id, $title, $content, $author);
         } else {
-            createPost($title, $content);
+            createPost($title, $content, $author);
         }
         header('Location: dashboard.php');
         exit;
@@ -162,6 +164,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     <form id="post-form" method="post" action="" style="height: 100%;">
         <input type="text" class="title-input" id="title" name="title" placeholder="Wpisz tytuł artykułu..." value="<?= htmlspecialchars($post['title']) ?>" required>
+        
+        <input type="text" class="title-input" id="author" name="author" placeholder="Autor publikacji..." value="<?= htmlspecialchars($post['author']) ?>" style="font-size: 1rem; padding: 10px; margin-bottom: 20px;">
         
         <!-- Ukryte pole dla prawdziwych danych wędrujących przez POST -->
         <input type="hidden" name="content" id="hiddenContent">

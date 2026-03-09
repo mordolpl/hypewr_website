@@ -13,6 +13,13 @@ function getDbConnection(): PDO {
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ]);
+        
+        // Add author column if it doesn't exist
+        try {
+            $pdo->exec("ALTER TABLE posts ADD COLUMN author VARCHAR(255) DEFAULT 'Administrator'");
+        } catch (PDOException $e) {
+            // Ignore error if column already exists
+        }
     }
     return $pdo;
 }
