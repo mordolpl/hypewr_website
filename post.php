@@ -38,7 +38,7 @@ if (!$post) {
     </header>
 
     <article class="section" style="padding-top: 60px; padding-bottom: 80px; max-width: 1800px; width: 95%; margin: 0 auto;">
-        <div class="post-content" style="background: var(--card-bg); padding: 60px 80px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 10px 50px rgba(0,0,0,0.6); font-size: 1.25rem; line-height: 1.9; color: #ddd; min-height: 50vh;">
+        <div class="post-content" style="background: var(--card-bg); padding: 60px 80px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 10px 50px rgba(0,0,0,0.6); font-size: 1.25rem; line-height: 1.9; color: #ddd; min-height: 50vh; overflow-wrap: anywhere; word-break: break-word;">
             <?= $post['content'] ?>
         </div>
         
