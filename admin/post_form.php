@@ -61,97 +61,90 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             height: 100vh;
             display: flex;
             flex-direction: column;
-            font-family: Arial, sans-serif;
-            overflow: hidden; /* Zapobiega przewijaniu całej strony, edytor będzie miał swój pasek */
+            overflow: hidden;
         }
         .form-box {
             display: flex;
             flex-direction: column;
             width: 100vw;
             height: 100vh;
-            max-width: none !important; /* Nadpisuje limit z admin-style.css */
-            margin: 0 !important;       /* Nadpisuje center margin z admin-style.css */
-            padding: 40px;
+            max-width: none !important;
+            margin: 0 !important;
+            padding: 40px 60px;
             box-sizing: border-box;
             background: var(--body-bg);
+            box-shadow: none;
+            border: none;
         }
         form {
             display: flex;
             flex-direction: column;
             flex-grow: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
         }
         .header-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
         }
         .header-row h1 {
             margin: 0;
             color: var(--text-main);
-            font-size: 1.75rem;
+            font-size: 1.8rem;
         }
         .header-row a, .header-row button {
             padding: 10px 20px;
             text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            border: 1px solid var(--border-color);
             cursor: pointer;
-            font-size: 14px;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
         }
         .header-row a {
-            background: rgba(255, 255, 255, 0.05);
+            background: #fff;
             color: var(--text-main);
-            margin-right: 10px;
-            border: 1px solid var(--border-color);
+            margin-right: 12px;
         }
         .header-row a:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: #fafafa;
         }
         .header-row button {
             background: var(--primary-color);
             color: #fff;
+            border-color: var(--primary-color);
         }
         .header-row button:hover {
             background: var(--primary-hover);
         }
-        .title-input {
-            width: 100%;
-            padding: 15px;
-            font-size: 1.2rem;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            background: #fff !important; /* nadpisanie ciemnego koloru */
-            color: #000 !important;
-            box-sizing: border-box;
-        }
-        /* Konfiguracja Quill żeby zajął resztę ekranu */
+        
         #editor-wrapper {
             display: flex;
             flex-direction: column;
             flex-grow: 1;
-            /* Odejmujemy marginesy i tytuł żeby idealnie wpasować edytor */
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.02);
+            overflow: hidden;
         }
         .ql-toolbar.ql-snow {
-            border-radius: 8px 8px 0 0;
-            background: var(--card-bg);
-            border-color: var(--border-color);
-        }
-        .ql-toolbar.ql-snow .ql-stroke {
-            stroke: var(--text-main) !important;
-        }
-        .ql-toolbar.ql-snow .ql-fill {
-            fill: var(--text-main) !important;
-        }
-        .ql-toolbar.ql-snow .ql-picker {
-            color: var(--text-main) !important;
+            border: none !important;
+            border-bottom: 1px solid var(--border-color) !important;
+            background: #fafafa;
+            padding: 12px 15px !important;
         }
         .ql-container.ql-snow {
-            border-radius: 0 0 8px 8px;
-            background: var(--card-bg);
-            border-color: var(--border-color);
+            border: none !important;
+            background: #fff;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
@@ -160,8 +153,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             flex-grow: 1;
             font-size: 1.1rem;
             color: var(--text-main);
+            padding: 30px !important;
             overflow-y: auto;
-            max-height: calc(100vh - 200px); /* Limit height so toolbar stays visible */
         }
     </style>
 </head>
@@ -183,14 +176,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
     
     <form id="post-form" method="post" action="" style="height: 100%;">
-        <input type="text" class="title-input" id="title" name="title" placeholder="Wpisz tytuł artykułu..." value="<?= htmlspecialchars($post['title']) ?>" required>
+        <input type="text" class="title-input" id="title" name="title" placeholder="Wpisz tytuł artykułu..." value="<?= htmlspecialchars($post['title']) ?>" required style="background: transparent;">
         
         <div style="display: flex; gap: 20px;">
-            <input type="text" class="title-input" id="author" name="author" placeholder="Autor publikacji..." value="<?= htmlspecialchars($post['author']) ?>" style="font-size: 1rem; padding: 15px 0; margin-bottom: 20px; flex: 1;">
+            <input type="text" class="title-input" id="author" name="author" placeholder="Autor publikacji..." value="<?= htmlspecialchars($post['author']) ?>" style="font-size: 1.1rem; padding: 10px 0; margin-bottom: 30px; flex: 1; background: transparent;">
             
             <div style="flex: 2; display: flex; flex-direction: column;">
-                <input type="text" class="title-input" id="cover_image_url" placeholder="URL okładki (lub wgraj plik poniżej) -> domyślnie kosmos" value="<?= htmlspecialchars($post['cover_image']) ?>" style="font-size: 1rem; padding: 15px 0; margin-bottom: 5px;">
-                <input type="file" id="cover_image_file" accept="image/*" style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-muted);">
+                <input type="text" class="title-input" id="cover_image_url" placeholder="URL okładki (lub wgraj plik poniżej) -> domyślnie kosmos" value="<?= htmlspecialchars($post['cover_image']) ?>" style="font-size: 1.1rem; padding: 10px 0; margin-bottom: 5px; background: transparent;">
+                <input type="file" id="cover_image_file" accept="image/*" style="font-size: 0.95rem; margin-bottom: 30px; color: var(--text-muted); font-family: var(--font-family);">
                 <input type="hidden" name="cover_image" id="cover_image_hidden" value="<?= htmlspecialchars($post['cover_image']) ?>">
             </div>
         </div>
