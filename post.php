@@ -19,8 +19,10 @@ $og_description = mb_strimwidth(trim(preg_replace('/\s+/', ' ', $plain_text)), 0
 
 // Domyślne zdjęcie (np. logo lub tło strony)
 $og_image = 'https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?q=80&w=2000'; 
-// Wyszukanie pierwszego tagu <img> w treści posta
-if (preg_match('/<img.+src=[\'"](?P<src>.+?)[\'"].*>/i', $post['content'], $match)) {
+if (!empty($post['cover_image'])) {
+    $og_image = $post['cover_image'];
+} else if (preg_match('/<img.+src=[\'"](?P<src>.+?)[\'"].*>/i', $post['content'], $match)) {
+    // Fallback: Wyszukanie pierwszego tagu <img> w treści posta
     $og_image = $match['src'];
 }
 
@@ -63,7 +65,7 @@ if ($reading_time_minutes < 1) $reading_time_minutes = 1;
     
     <header class="sub-hero" style="height: 40vh; min-height: 300px; display: flex; justify-content: center; align-items: center; text-align: center; position: relative;">
         <!-- Background placeholder (can be dynamic if db had an image column) -->
-        <img src="https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?q=80&w=2000" class="hero-bg-img" alt="Post Background">
+        <img src="<?= !empty($post['cover_image']) ? htmlspecialchars($post['cover_image']) : 'https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?q=80&w=2000' ?>" class="hero-bg-img" alt="Post Background" style="object-fit: cover;">
         <div class="video-overlay"></div>
         <div class="hero-content" style="z-index: 10; max-width: 1200px; padding: 0 40px; width: 100%;">
             <h1 style="font-size: 3.5rem; margin-bottom: 15px; text-shadow: 0 4px 20px rgba(0,195,255,0.4);"><?= htmlspecialchars($post['title']) ?></h1>

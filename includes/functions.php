@@ -15,15 +15,15 @@ function getPostById(int $id): ?array {
     return $row ? $row : null;
 }
 
-function createPost(string $title, string $content, string $author = 'Administrator'): int {
-    $stmt = db()->prepare('INSERT INTO posts(title, content, author, created_at) VALUES(:title, :content, :author, now()) RETURNING id');
-    $stmt->execute([':title' => $title, ':content' => $content, ':author' => $author]);
+function createPost(string $title, string $content, string $author = 'Administrator', string $coverImage = ''): int {
+    $stmt = db()->prepare('INSERT INTO posts(title, content, author, cover_image, created_at) VALUES(:title, :content, :author, :cover_image, now()) RETURNING id');
+    $stmt->execute([':title' => $title, ':content' => $content, ':author' => $author, ':cover_image' => $coverImage]);
     return (int)$stmt->fetchColumn();
 }
 
-function updatePost(int $id, string $title, string $content, string $author): bool {
-    $stmt = db()->prepare('UPDATE posts SET title = :title, content = :content, author = :author, updated_at = now() WHERE id = :id');
-    return $stmt->execute([':title' => $title, ':content' => $content, ':author' => $author, ':id' => $id]);
+function updatePost(int $id, string $title, string $content, string $author, string $coverImage = ''): bool {
+    $stmt = db()->prepare('UPDATE posts SET title = :title, content = :content, author = :author, cover_image = :cover_image, updated_at = now() WHERE id = :id');
+    return $stmt->execute([':title' => $title, ':content' => $content, ':author' => $author, ':cover_image' => $coverImage, ':id' => $id]);
 }
 
 function deletePost(int $id): bool {

@@ -17,9 +17,12 @@ function getDbConnection(): PDO {
         // Add author column if it doesn't exist
         try {
             $pdo->exec("ALTER TABLE posts ADD COLUMN author VARCHAR(255) DEFAULT 'Administrator'");
-        } catch (PDOException $e) {
-            // Ignore error if column already exists
-        }
+        } catch (PDOException $e) {}
+        
+        // Add cover_image column if it doesn't exist
+        try {
+            $pdo->exec("ALTER TABLE posts ADD COLUMN cover_image TEXT DEFAULT ''");
+        } catch (PDOException $e) {}
     }
     return $pdo;
 }

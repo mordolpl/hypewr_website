@@ -93,7 +93,8 @@ try {
             <div class="grid-3 reveal">
                 <?php foreach ($posts as $post): ?>
                     <div class="card">
-                        <div class="image-placeholder" style="background-image: url('https://images.unsplash.com/photo-1495020689067-958852a7765e?q=80&w=800');"></div>
+                        <?php $coverUrl = !empty($post['cover_image']) ? htmlspecialchars($post['cover_image']) : 'https://images.unsplash.com/photo-1495020689067-958852a7765e?q=80&w=800'; ?>
+                        <div class="image-placeholder" style="background-image: url('<?= $coverUrl ?>');"></div>
                         <h3 class="card-title" style="font-family: var(--font-head); margin-bottom: 5px;"><?= htmlspecialchars($post['title']) ?></h3>
                         <small style="color: var(--accent-primary); margin-bottom: 15px; display:block; font-family: var(--font-head); font-size: 0.85rem; letter-spacing: 1px;"><?= date('Y-m-d H:i', strtotime($post['created_at'])) ?></small>
                         <p class="card-description" style="color: var(--text-muted); margin-bottom: 25px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">

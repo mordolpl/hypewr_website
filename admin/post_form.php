@@ -8,7 +8,7 @@ if (empty($_SESSION['user_id'])) {
 }
 
 $edit = false;
-$post = ['title' => '', 'content' => '', 'author' => $_SESSION['username'] ?? 'Administrator'];
+$post = ['title' => '', 'content' => '', 'author' => $_SESSION['username'] ?? 'Administrator', 'cover_image' => ''];
 
 if (isset($_GET['id'])) {
     $edit = true;
@@ -26,15 +26,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = trim($_POST['title'] ?? '');
     $content = trim($_POST['content'] ?? '');
     $author = trim($_POST['author'] ?? 'Administrator');
+    $cover_image = trim($_POST['cover_image'] ?? '');
     
     if ($title === '' || $content === '') {
         $errors[] = 'Tytuł i treść są wymagane.';
     }
     if (empty($errors)) {
         if ($edit) {
-            updatePost($id, $title, $content, $author);
+            updatePost($id, $title, $content, $author, $cover_image);
         } else {
-            createPost($title, $content, $author);
+            createPost($title, $content, $author, $cover_image);
         }
         header('Location: dashboard.php');
         exit;
@@ -165,7 +166,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form id="post-form" method="post" action="" style="height: 100%;">
         <input type="text" class="title-input" id="title" name="title" placeholder="Wpisz tytuł artykułu..." value="<?= htmlspecialchars($post['title']) ?>" required>
         
-        <input type="text" class="title-input" id="author" name="author" placeholder="Autor publikacji..." value="<?= htmlspecialchars($post['author']) ?>" style="font-size: 1rem; padding: 10px; margin-bottom: 20px;">
+        <div style="display: flex; gap: 20px;">
+            <input type="text" class="title-input" id="author" name="author" placeholder="Autor publikacji..." value="<?= htmlspecialchars($post['author']) ?>" style="font-size: 1rem; padding: 10px; margin-bottom: 20px; flex: 1;">
+            
+            <div style="flex: 2; display: flex; flex-direction: column;">
+                <input type="text" class="title-input" id="cover_image_url" placeholder="URL okładki (lub wgraj plik poniżej) -> domyślnie kosmos" value="<?= htmlspecialchars($post['cover_image']) ?>" style="font-size: 1rem; padding: 10px; margin-bottom: 5px;">
+                <input type="file" id="cover_image_file" accept="image/*" style="font-size: 0.9rem; margin-bottom: 20px;">
+                <input type="hidden" name="cover_image" id="cover_image_hidden" value="<?= htmlspecialchars($post['cover_image']) ?>">
+            </div>
+        </div>
         
         <!-- Ukryte pole dla prawdziwych danych wędrujących przez POST -->
         <input type="hidden" name="content" id="hiddenContent">
@@ -193,10 +202,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     });
 
     var form = document.querySelector('form');
-    form.onsubmit = function() {
+    var fileInput = document.getElementById('cover_image_file');
+    var urlInput = document.getElementById('cover_image_url');
+    var hiddenCoverInput = document.getElementById('cover_image_hidden');
+
+    form.onsubmit = function(e) {
         // Pobieramy wygenerowany kod HTML i wrzucamy do inputa przed wysłaniem formularza
         var htmlContent = document.querySelector('.ql-editor').innerHTML;
         document.querySelector('#hiddenContent').value = htmlContent;
+        
+        // Obsługa okładki
+        if (fileInput.files.length > 0) {
+            // Zatrzymaj domyślne wysyłanie na chwilę żeby przekonwertować zdjęcie na Base64
+            e.preventDefault();
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                hiddenCoverInput.value = event.target.result;
+                form.submit(); // Ręcznie wrzuć formularz po konwersji
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+        } else {
+            // Jeśli nie wgrano pliku, użyj wpisanego URL'a
+            hiddenCoverInput.value = urlInput.value;
+            // Pozostawiamy domyślne zachowanie submita - pójdzie dalej
+        }
     };
 </script>
 </body>
