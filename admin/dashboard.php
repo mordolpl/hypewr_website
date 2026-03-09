@@ -2,10 +2,23 @@
 session_start();
 require_once __DIR__ . '/../includes/functions.php';
 
-// simple auth check
+// simple auth check and remember me fallback
 if (empty($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit;
+    if (!empty($_COOKIE['admin_remember_token'])) {
+        $db = db();
+        $stmt = $db->prepare('SELECT id FROM users WHERE md5(username || password_hash) = :token LIMIT 1');
+        $stmt->execute([':token' => $_COOKIE['admin_remember_token']]);
+        $user_id = $stmt->fetchColumn();
+        if ($user_id) {
+            $_SESSION['user_id'] = $user_id;
+        } else {
+            header('Location: login.php');
+            exit;
+        }
+    } else {
+        header('Location: login.php');
+        exit;
+    }
 }
 
 // handle deletion if requested (must run before output)

@@ -66,6 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             flex-direction: column;
             width: 100vw;
             height: 100vh;
+            max-width: none !important; /* Nadpisuje limit z admin-style.css */
+            margin: 0 !important;       /* Nadpisuje center margin z admin-style.css */
             padding: 20px;
             box-sizing: border-box;
             background: #fff;
