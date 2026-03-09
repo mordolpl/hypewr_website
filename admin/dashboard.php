@@ -53,13 +53,14 @@ $posts = getPosts();
     <?php else: ?>
         <table>
             <thead>
-            <tr><th>ID</th><th>Tytuł</th><th>Data</th><th>Akcje</th></tr>
+            <tr><th>ID</th><th>Tytuł</th><th>Autor</th><th>Data</th><th>Akcje</th></tr>
             </thead>
             <tbody>
             <?php foreach ($posts as $p): ?>
                 <tr>
                     <td><?= $p['id'] ?></td>
                     <td><?= htmlspecialchars($p['title']) ?></td>
+                    <td><?= htmlspecialchars($p['author'] ?? 'Administrator') ?></td>
                     <td><?= htmlspecialchars($p['created_at']) ?></td>
                     <td>
                         <a href="post_form.php?id=<?= $p['id'] ?>">Edytuj</a>
