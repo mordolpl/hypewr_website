@@ -29,9 +29,9 @@ $projects = [
     [
         'img' => 'https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?q=80&w=800',
         'title_i18n' => 'projekty_card3_title',
-        'title' => 'Tor Próżniowy',
+        'title' => 'System lewitacji magnetycznej EMS',
         'desc_i18n' => 'projekty_card3_desc',
-        'desc' => 'Projekt infrastruktury testowej w skali 1:10 do badań nad dekompresją.',
+        'desc' => 'Projekt zaawansowanego systemu lewitacji magnetycznej, eliminującego tarcie i zwiększającego efektywność.',
         'cta_i18n' => 'projekty_card3_cta',
         'cta' => 'Wkrótce',
         'link' => '#'

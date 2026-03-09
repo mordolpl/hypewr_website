@@ -27,17 +27,45 @@
                 <div class="title-bar"></div>
                 <form class="card" style="height: auto; flex-grow: 1;">
                     <label style="display: block; margin-bottom: 5px;" data-i18n="kontakt_label_name">Imię i Nazwisko</label>
-                    <input type="text" data-i18n="form_name" placeholder="Jan Kowalski">
+                    <input type="text" data-i18n="form_name" name="name" placeholder="Jan Kowalski">
                     
                     <label style="display: block; margin-bottom: 5px;" data-i18n="kontakt_label_email">Adres E-mail</label>
-                    <input type="email" data-i18n="form_email" placeholder="email@przyklad.pl">
+                    <input type="email" data-i18n="form_email" name="email" placeholder="email@przyklad.pl">
                     
                     <label style="display: block; margin-bottom: 5px;" data-i18n="kontakt_label_message">Wiadomość</label>
-                    <textarea rows="6" data-i18n="form_msg" placeholder="Treść wiadomości..."></textarea>
+                    <textarea rows="6" data-i18n="form_msg" name="message" placeholder="Treść wiadomości..."></textarea>
                     
                     <button type="submit" class="cta-btn" data-i18n="form_btn" style="width: 100%; margin-top: auto;">Wyślij Wiadomość</button>
                 </form>
             </div>
+
+            <?php
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                    // 1. Pobieranie danych z formularza
+                    $name = strip_tags(trim($_POST["name"]));
+                    $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
+                    $message = trim($_POST["message"]);
+
+                    // 2. Konfiguracja odbiorcy
+                    $to = "kn.hypewr@pwr.edu.pl"; // TU WPISZ SWÓJ ADRES
+                    $subject = "Nowa wiadomość od: $name";
+                    
+                    // 3. Budowanie treści maila
+                    $email_content = "Imię: $name\n";
+                    $email_content .= "Email: $email\n\n";
+                    $email_content .= "Wiadomość:\n$message\n";
+
+                    // 4. Nagłówki
+                    $headers = "From: $name <$email>";
+
+                    // 5. Wysyłka
+                    if (mail($to, $subject, $email_content, $headers)) {
+                        echo "Dziękujemy! Wiadomość została wysłana.";
+                    } else {
+                        echo "Ups! Coś poszło nie tak.";
+                    }
+                }
+            ?>
 
             <div style="display: flex; flex-direction: column;">
                 <h2 class="section-title" style="visibility: hidden;" data-i18n="kontakt_dane">Dane</h2> <div class="title-bar" style="visibility: hidden;"></div>
