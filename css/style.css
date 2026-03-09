@@ -295,47 +295,41 @@ footer {
     text-align: center;
 }
 
-/* --- PAGE TRANSITION ANIMATION (TRAIN) --- */
-.train-transition-overlay {
+/* --- MODERN PAGE TRANSITION --- */
+.modern-transition-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: var(--bg-color);
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end; /* Logo will stick to the right edge */
-    pointer-events: none; /* Let clicks pass through when hidden */
-    transform: translateX(100vw); /* Hidden off-screen to the right initially */
+    background-color: #050508; /* Bardzo ciemny, elegancki odcień pasujący do tła */
+    z-index: 99999;
+    pointer-events: none; /* Kliknięcia przechodzą kiedy ukryte */
+    transform-origin: bottom;
+    transform: scaleY(0);
+    will-change: transform;
 }
 
-/* The logo "locomotive" */
-.train-transition-overlay img {
-    height: 100px; /* Adjust size as needed */
-    margin-right: 50px;
-    filter: drop-shadow(0 0 20px var(--accent-primary));
+/* Wjazd ze spodu do góry (opuszczanie strony) */
+.modern-transition-overlay.slide-in {
+    transform-origin: bottom;
+    animation: curtainUp 0.5s cubic-bezier(0.85, 0, 0.15, 1) forwards;
+    pointer-events: all; 
 }
 
-/* Slide IN animation (covering the screen from left to right) */
-.train-transition-overlay.slide-in {
-    animation: trainSlideIn 0.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-    pointer-events: all; /* Block clicks while transitioning */
-}
-
-/* Slide OUT animation (revealing the screen from left to right) */
-.train-transition-overlay.slide-out {
-    animation: trainSlideOut 0.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+/* Wyjazd do góry (odsłanianie nowej strony) */
+.modern-transition-overlay.slide-out {
+    transform-origin: top;
+    animation: curtainDown 0.6s cubic-bezier(0.85, 0, 0.15, 1) forwards;
     pointer-events: none;
 }
 
-@keyframes trainSlideIn {
-    0% { transform: translateX(-100vw); }
-    100% { transform: translateX(0); }
+@keyframes curtainUp {
+    0% { transform: scaleY(0); }
+    100% { transform: scaleY(1); }
 }
 
-@keyframes trainSlideOut {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(100vw); }
+@keyframes curtainDown {
+    0% { transform: scaleY(1); }
+    100% { transform: scaleY(0); }
 }

@@ -1,25 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 0. PAGE TRANSITION (TRAIN ANIMATION) ---
-    // Determine base path for the logo depending on where we are
-    const isInPages = window.location.pathname.includes('/pages/') || window.location.href.includes('pages');
-    const imageBasePath = isInPages ? '../media/images/' : 'media/images/';
-    
-    // Inject overlay HTML into body
+    // --- 0. MODERN PAGE TRANSITION ---
+    // Inject elegant minimalist overlay HTML into body
     const overlayHtml = `
-        <div id="train-transition" class="train-transition-overlay">
-            <img src="${imageBasePath}logo.png" alt="Hyper Train Logo">
-        </div>
+        <div id="page-transition" class="modern-transition-overlay"></div>
     `;
     document.body.insertAdjacentHTML('beforeend', overlayHtml);
-    const transitionOverlay = document.getElementById('train-transition');
+    const transitionOverlay = document.getElementById('page-transition');
 
-    // On page load, play the slide-out animation to reveal the content
-    // We remove the class after it finishes so it's ready for slide-in
+    // On page load, play the slide-out animation to reveal the content smoothly
     transitionOverlay.classList.add('slide-out');
     setTimeout(() => {
         transitionOverlay.classList.remove('slide-out');
-    }, 500); // matches the 0.5s CSS animation
+    }, 600); // matches the 0.6s CSS animation
 
     // Intercept internal link clicks
     document.addEventListener('click', (e) => {
