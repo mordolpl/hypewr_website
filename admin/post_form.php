@@ -47,32 +47,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title><?= $edit ? 'Edytuj wpis' : 'Dodaj wpis' ?></title>
     <link rel="stylesheet" href="admin-style.css">
     
-    <!-- TinyMCE CDN -->
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-    <script>
-      tinymce.init({
-        selector: '#content',
-        plugins: 'advlist autolink lists link image charmap preview anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking table emoticons template help',
-        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-        height: 500,
-        // Umożliwiamy wrzucanie zdjęć bez zewnętrznych API - TinyMCE zamieni je na Base64 Data URI
-        automatic_uploads: true,
-        images_upload_handler: function (blobInfo, success, failure) {
-            // Zwracamy zdjęcie na żywo jako Base64 zakodowane w znaczniku <img src="...">
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(blobInfo.blob());
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
-            });
-        },
-        setup: function (editor) {
-            editor.on('change', function () {
-                editor.save();
-            });
+    <!-- Quill CSS & JS -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <style>
+        .ql-editor {
+            min-height: 400px;
+            font-size: 16px;
+            background: #fff;
+            color: #000;
         }
-      });
-    </script>
+        .ql-toolbar {
+            background: #f4f4f4;
+        }
+    </style>
 </head>
 <body>
 <div class="form-box">
@@ -87,11 +75,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="text" id="title" name="title" value="<?= htmlspecialchars($post['title']) ?>" required>
 
         <label for="content">Treść:</label>
-        <textarea id="content" name="content" required><?= htmlspecialchars($post['content']) ?></textarea>
+        <!-- Ukryte pole dla prawdziwych danych wędrujących przez POST -->
+        <input type="hidden" name="content" id="hiddenContent">
+        
+        <!-- Widoczny edytor Quill -->
+        <div id="editor-container"><?= $post['content'] ?></div>
 
         <button type="submit"><?= $edit ? 'Zapisz zmiany' : 'Dodaj' ?></button>
     </form>
     <p><a href="dashboard.php">Powrót do panelu</a></p>
 </div>
+
+<script>
+    var quill = new Quill('#editor-container', {
+        theme: 'snow',
+        modules: {
+            toolbar: [
+                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                ['bold', 'italic', 'underline', 'strike'],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                [{ 'color': [] }, { 'background': [] }],
+                ['link', 'image', 'video'],
+                ['clean']
+            ]
+        }
+    });
+
+    var form = document.querySelector('form');
+    form.onsubmit = function() {
+        // Pobieramy wygenerowany kod HTML i wrzucamy do inputa przed wysłaniem formularza
+        var htmlContent = document.querySelector('.ql-editor').innerHTML;
+        document.querySelector('#hiddenContent').value = htmlContent;
+    };
+</script>
 </body>
 </html>
