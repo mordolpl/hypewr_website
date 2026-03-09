@@ -1,51 +1,37 @@
 document.addEventListener('DOMContentLoaded', () => {
     
     // --- 0. MODERN PAGE TRANSITION ---
-    // Inject elegant minimalist overlay HTML into body
-    const overlayHtml = `
-        <div id="page-transition" class="modern-transition-overlay"></div>
-    `;
-    document.body.insertAdjacentHTML('beforeend', overlayHtml);
-    const transitionOverlay = document.getElementById('page-transition');
-
-    // On page load, play the slide-out animation to reveal the content smoothly
-    transitionOverlay.classList.add('slide-out');
-    setTimeout(() => {
-        transitionOverlay.classList.remove('slide-out');
-    }, 600); // matches the 0.6s CSS animation
+    // Handle browser back button cache (bfcache)
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted || document.body.classList.contains('page-exit')) {
+            document.body.classList.remove('page-exit');
+        }
+    });
 
     // Intercept internal link clicks
     document.addEventListener('click', (e) => {
-        // Find the closest anchor tag in case they clicked an icon inside it
         const link = e.target.closest('a');
         if (!link) return;
         
         const targetUrl = link.getAttribute('href');
         
-        // Ignore links that shouldn't trigger the transition
         if (
             !targetUrl || 
             targetUrl.startsWith('#') || // anchors
             targetUrl.startsWith('mailto:') || // emails
             targetUrl.startsWith('tel:') || // phones
             link.target === '_blank' || // new tabs
-            // Ignore external links (make sure it's same origin or a relative path)
             (targetUrl.startsWith('http') && !targetUrl.includes(window.location.hostname)) 
         ) {
             return;
         }
 
-        // Prevent immediate navigation
         e.preventDefault();
+        document.body.classList.add('page-exit');
 
-        // Start slide-in animation to cover the screen
-        transitionOverlay.classList.remove('slide-out');
-        transitionOverlay.classList.add('slide-in');
-
-        // Wait for animation to finish, then navigate
         setTimeout(() => {
             window.location.href = targetUrl;
-        }, 500); // 0.5s duration
+        }, 200); // 0.2s duration matches CSS transition
     });
     
     // --- 1. SŁOWNIK TŁUMACZEŃ ---
