@@ -1,7 +1,53 @@
 <?php
 // dynamic projects page with news posts
 require_once __DIR__ . '/../includes/functions.php';
-$posts = getPosts();
+
+// At the moment, the database connection is not working.
+// The projects are temporarily hardcoded here.
+// Once the database is fixed, this should be fetched from a 'projects' table.
+$projects = [
+    [
+        'img' => 'https://images.unsplash.com/photo-1535378437323-95288ac57185?q=80&w=800',
+        'title_i18n' => 'projekty_card1_title',
+        'title' => 'Prototype Pod I',
+        'desc_i18n' => 'projekty_card1_desc',
+        'desc' => 'Pierwsza iteracja kapsuły testowej. Skupienie na aerodynamice i pasywnej lewitacji.',
+        'cta_i18n' => 'projekty_card1_cta',
+        'cta' => 'Szczegóły',
+        'link' => 'projekt-szczegoly.html'
+    ],
+    [
+        'img' => 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800',
+        'title_i18n' => 'projekty_card2_title',
+        'title' => 'Napęd LIM',
+        'desc_i18n' => 'projekty_card2_desc',
+        'desc' => 'Autorski projekt silnika liniowego, zapewniający precyzyjne przyspieszenie.',
+        'cta_i18n' => 'projekty_card2_cta',
+        'cta' => 'Wkrótce',
+        'link' => '#'
+    ],
+    [
+        'img' => 'https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?q=80&w=800',
+        'title_i18n' => 'projekty_card3_title',
+        'title' => 'Tor Próżniowy',
+        'desc_i18n' => 'projekty_card3_desc',
+        'desc' => 'Projekt infrastruktury testowej w skali 1:10 do badań nad dekompresją.',
+        'cta_i18n' => 'projekty_card3_cta',
+        'cta' => 'Wkrótce',
+        'link' => '#'
+    ]
+];
+
+$posts = [];
+// The getPosts() function will fail if the database is not configured.
+// To prevent a fatal error, we wrap it in a try-catch block.
+try {
+    $posts = getPosts();
+} catch (Exception $e) {
+    // You could log the error here if a logging system was in place.
+    // For now, we'll just ensure $posts remains an empty array.
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -26,24 +72,14 @@ $posts = getPosts();
 
     <section class="section">
         <div class="grid-3 reveal">
-            <div class="card">
-                <div class="image-placeholder" style="background-image: url('https://images.unsplash.com/photo-1535378437323-95288ac57185?q=80&w=800');"></div>
-                <h3 style="font-family: var(--font-head); margin-bottom: 10px;" data-i18n="projekty_card1_title">Prototype Pod I</h3>
-                <p style="color: var(--text-muted); margin-bottom: 20px;" data-i18n="projekty_card1_desc">Pierwsza iteracja kapsuły testowej. Skupienie na aerodynamice i pasywnej lewitacji.</p>
-                <a href="projekt-szczegoly.html" class="cta-btn outline" style="width: 100%; text-align: center; margin-top: auto;" data-i18n="projekty_card1_cta">Szczegóły</a>
-            </div>
-            <div class="card">
-                <div class="image-placeholder" style="background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800');"></div>
-                <h3 style="font-family: var(--font-head); margin-bottom: 10px;" data-i18n="projekty_card2_title">Napęd LIM</h3>
-                <p style="color: var(--text-muted); margin-bottom: 20px;" data-i18n="projekty_card2_desc">Autorski projekt silnika liniowego, zapewniający precyzyjne przyspieszenie.</p>
-                <a href="#" class="cta-btn outline" style="width: 100%; text-align: center; margin-top: auto;" data-i18n="projekty_card2_cta">Wkrótce</a>
-            </div>
-             <div class="card">
-                <div class="image-placeholder" style="background-image: url('https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?q=80&w=800');"></div>
-                <h3 style="font-family: var(--font-head); margin-bottom: 10px;" data-i18n="projekty_card3_title">Tor Próżniowy</h3>
-                <p style="color: var(--text-muted); margin-bottom: 20px;" data-i18n="projekty_card3_desc">Projekt infrastruktury testowej w skali 1:10 do badań nad dekompresją.</p>
-                <a href="#" class="cta-btn outline" style="width: 100%; text-align: center; margin-top: auto;" data-i18n="projekty_card3_cta">Wkrótce</a>
-            </div>
+            <?php foreach ($projects as $project): ?>
+                <div class="card">
+                    <div class="image-placeholder" style="background-image: url('<?= htmlspecialchars($project['img']) ?>');"></div>
+                    <h3 class="card-title" data-i18n="<?= $project['title_i18n'] ?>"><?= htmlspecialchars($project['title']) ?></h3>
+                    <p class="card-description" data-i18n="<?= $project['desc_i18n'] ?>"><?= htmlspecialchars($project['desc']) ?></p>
+                    <a href="<?= htmlspecialchars($project['link']) ?>" class="cta-btn outline card-cta" data-i18n="<?= $project['cta_i18n'] ?>"><?= htmlspecialchars($project['cta']) ?></a>
+                </div>
+            <?php endforeach; ?>
         </div>
     </section>
 
@@ -51,8 +87,8 @@ $posts = getPosts();
     <section class="section" id="news-section">
         <h2 class="section-title">Aktualności</h2>
         <div class="title-bar"></div>
-        <?php if (count($posts) === 0): ?>
-            <p>Brak wpisów.</p>
+        <?php if (empty($posts)): ?>
+            <p>Brak aktualności do wyświetlenia.</p>
         <?php else: ?>
             <?php foreach ($posts as $post): ?>
                 <article class="post reveal">

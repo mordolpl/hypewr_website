@@ -24,24 +24,23 @@ $posts = getPosts();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel administracyjny</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <style>
-        table { width: 100%; border-collapse: collapse; margin-top:20px; }
-        th, td { padding:8px; border:1px solid #ccc; text-align:left; }
-        a.button { display:inline-block; padding:6px 12px; background:#007bff; color:#fff; text-decoration:none; border-radius:3px; }
-    </style>
+    <link rel="stylesheet" href="admin-style.css">
 </head>
 <body>
-    <div id="nav-placeholder"></div>
-    <h1>Panel admina</h1>
-    <p><a href="post_form.php" class="button">Dodaj nowy wpis</a> | <a href="logout.php">Wyloguj</a></p>
+<div class="container">
+    <div class="admin-header">
+        <h1>Panel admina</h1>
+        <a href="logout.php">Wyloguj</a>
+    </div>
+
+    <p><a href="post_form.php" class="button">Dodaj nowy wpis</a></p>
 
     <?php if (count($posts) === 0): ?>
         <p>Brak wpisów w bazie.</p>
     <?php else: ?>
         <table>
             <thead>
-                <tr><th>ID</th><th>Tytuł</th><th>Data</th><th>Akcje</th></tr>
+            <tr><th>ID</th><th>Tytuł</th><th>Data</th><th>Akcje</th></tr>
             </thead>
             <tbody>
             <?php foreach ($posts as $p): ?>
@@ -50,24 +49,14 @@ $posts = getPosts();
                     <td><?= htmlspecialchars($p['title']) ?></td>
                     <td><?= htmlspecialchars($p['created_at']) ?></td>
                     <td>
-                        <a href="post_form.php?id=<?= $p['id'] ?>">Edytuj</a> |
-                        <a href="?delete=<?= $p['id'] ?>" onclick="return confirm('Usuń wpis?');">Usuń</a>
+                        <a href="post_form.php?id=<?= $p['id'] ?>">Edytuj</a>
+                        <a href="?delete=<?= $p['id'] ?>" class="danger" onclick="return confirm('Usuń wpis?');">Usuń</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
         </table>
     <?php endif; ?>
-    <script src="../js/script.js"></script>
-
-<?php
-// handle deletion if requested
-if (isset($_GET['delete'])) {
-    $id = (int)$_GET['delete'];
-    deletePost($id);
-    header('Location: dashboard.php');
-    exit;
-}
-?>
+</div>
 </body>
 </html>

@@ -30,28 +30,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <style>
-        /* small overrides for login form */
-        .login-box { max-width:400px; margin: 80px auto; padding: 20px; border:1px solid #ccc; background:#fff; }
-        .login-box input { width: 100%; padding:8px; margin-bottom:10px; }
-    </style>
+    <link rel="stylesheet" href="admin-style.css">
 </head>
 <body>
-    <div id="nav-placeholder"></div>
     <div class="login-box">
         <h2>Login administratora</h2>
         <?php if ($errors): ?>
-            <div style="color:red;">
+            <div class="error-box">
                 <?php foreach ($errors as $e) echo '<p>'.htmlspecialchars($e).'</p>'; ?>
             </div>
         <?php endif; ?>
         <form method="post" action="">
-            <label>Użytkownik:<br><input type="text" name="username" required></label><br>
-            <label>Hasło:<br><input type="password" name="password" required></label><br>
+            <label for="username">Użytkownik:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Hasło:</label>
+            <input type="password" id="password" name="password" required>
             <button type="submit">Zaloguj się</button>
         </form>
     </div>
-    <script src="../js/script.js"></script>
 </body>
 </html>

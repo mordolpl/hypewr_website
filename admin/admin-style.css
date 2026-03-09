@@ -1,0 +1,149 @@
+/* admin/admin-style.css */
+
+:root {
+    --primary-color: #007bff;
+    --primary-hover: #0056b3;
+    --body-bg: #f8f9fa;
+    --text-color: #333;
+    --border-color: #dee2e6;
+    --white: #fff;
+    --red: #dc3545;
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--body-bg);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: var(--primary-hover);
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+    background: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h1, h2, h3 {
+    color: var(--primary-color);
+}
+
+/* --- Forms --- */
+.form-box, .login-box {
+    max-width: 450px;
+    margin: 60px auto;
+    padding: 30px;
+    background: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+form input[type="text"],
+form input[type="password"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-sizing: border-box; /* Important */
+}
+
+form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+button[type="submit"], .button {
+    display: inline-block;
+    padding: 10px 15px;
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+}
+
+button[type="submit"]:hover, .button:hover {
+    background: var(--primary-hover);
+    text-decoration: none;
+}
+
+.error-box {
+    color: var(--red);
+    background: #fdd;
+    border: 1px solid var(--red);
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+/* --- Table --- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+    background: var(--white);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+th, td {
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    text-align: left;
+}
+
+thead {
+    background-color: #e9ecef;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+td a {
+    margin-right: 10px;
+}
+
+td a.danger {
+    color: var(--red);
+}
+
+/* --- Header & Nav --- */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.admin-header h1 {
+    margin: 0;
+}

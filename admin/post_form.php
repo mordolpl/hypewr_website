@@ -45,29 +45,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $edit ? 'Edytuj wpis' : 'Dodaj wpis' ?></title>
-    <link rel="stylesheet" href="../css/style.css">
-    <style>
-        .form-box { max-width:600px; margin:40px auto; }
-        textarea { width:100%; height:200px; }
-        input, textarea { margin-bottom:10px; padding:8px; }
-    </style>
+    <link rel="stylesheet" href="admin-style.css">
 </head>
 <body>
-    <div id="nav-placeholder"></div>
-    <div class="form-box">
-        <h1><?= $edit ? 'Edytuj wpis' : 'Dodaj wpis' ?></h1>
-        <?php if ($errors): ?>
-            <div style="color:red;">
-                <?php foreach ($errors as $e): ?><p><?= htmlspecialchars($e) ?></p><?php endforeach; ?>
-            </div>
-        <?php endif; ?>
-        <form method="post" action="">
-            <label>Tytuł:<br><input type="text" name="title" value="<?= htmlspecialchars($post['title']) ?>" required></label><br>
-            <label>Treść:<br><textarea name="content" required><?= htmlspecialchars($post['content']) ?></textarea></label><br>
-            <button type="submit"><?= $edit ? 'Zapisz zmiany' : 'Dodaj' ?></button>
-        </form>
-        <p><a href="dashboard.php">Powrót</a></p>
-    </div>
-    <script src="../js/script.js"></script>
+<div class="form-box">
+    <h1><?= $edit ? 'Edytuj wpis' : 'Dodaj wpis' ?></h1>
+    <?php if ($errors): ?>
+        <div class="error-box">
+            <?php foreach ($errors as $e): ?><p><?= htmlspecialchars($e) ?></p><?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+    <form method="post" action="">
+        <label for="title">Tytuł:</label>
+        <input type="text" id="title" name="title" value="<?= htmlspecialchars($post['title']) ?>" required>
+
+        <label for="content">Treść:</label>
+        <textarea id="content" name="content" required><?= htmlspecialchars($post['content']) ?></textarea>
+
+        <button type="submit"><?= $edit ? 'Zapisz zmiany' : 'Dodaj' ?></button>
+    </form>
+    <p><a href="dashboard.php">Powrót do panelu</a></p>
+</div>
 </body>
 </html>

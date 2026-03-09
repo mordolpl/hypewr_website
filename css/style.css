@@ -275,3 +275,22 @@ footer {
     .footer-left { flex-direction: column; }
     .footer-right { text-align: center !important; }
 }
+
+/* --- Card Content Enhancements --- */
+.card h3 {
+    font-family: var(--font-head);
+    margin-bottom: 15px; /* Increased margin */
+}
+
+.card p {
+    margin-bottom: 25px; /* Increased margin */
+}
+
+.card .cta-btn {
+    margin-top: auto; /* Pushes button to the bottom */
+}
+
+.card .cta-btn.outline {
+    width: 100%;
+    text-align: center;
+}
