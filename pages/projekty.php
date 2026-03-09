@@ -90,15 +90,19 @@ try {
         <?php if (empty($posts)): ?>
             <p>Brak aktualności do wyświetlenia.</p>
         <?php else: ?>
-            <?php foreach ($posts as $post): ?>
-                <article class="post reveal">
-                    <h3><a href="../post.php?id=<?= $post['id'] ?>"><?= htmlspecialchars($post['title']) ?></a></h3>
-                    <small><?= date('Y-m-d H:i', strtotime($post['created_at'])) ?></small>
-                    <div class="post-content">
-                        <?= nl2br(htmlspecialchars($post['content'])) ?>
+            <div class="grid-3 reveal">
+                <?php foreach ($posts as $post): ?>
+                    <div class="card">
+                        <div class="image-placeholder" style="background-image: url('https://images.unsplash.com/photo-1495020689067-958852a7765e?q=80&w=800');"></div>
+                        <h3 class="card-title" style="font-family: var(--font-head); margin-bottom: 5px;"><?= htmlspecialchars($post['title']) ?></h3>
+                        <small style="color: var(--accent-primary); margin-bottom: 15px; display:block; font-family: var(--font-head); font-size: 0.85rem; letter-spacing: 1px;"><?= date('Y-m-d H:i', strtotime($post['created_at'])) ?></small>
+                        <p class="card-description" style="color: var(--text-muted); margin-bottom: 25px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
+                            <?= htmlspecialchars(strip_tags($post['content'])) ?>
+                        </p>
+                        <a href="../post.php?id=<?= $post['id'] ?>" class="cta-btn outline card-cta" style="width: 100%; text-align: center; margin-top: auto;">Czytaj więcej</a>
                     </div>
-                </article>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
+            </div>
         <?php endif; ?>
     </section>
 
