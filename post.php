@@ -37,8 +37,8 @@ if (!$post) {
         </div>
     </header>
 
-    <article class="section" style="padding-top: 60px; padding-bottom: 80px; max-width: 1400px; width: 90%; margin: 0 auto;">
-        <div class="post-content" style="background: var(--card-bg); padding: 60px 80px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 10px 50px rgba(0,0,0,0.6); font-size: 1.2rem; line-height: 1.8; color: #ddd; min-height: 50vh;">
+    <article class="section" style="padding-top: 60px; padding-bottom: 80px; max-width: 1800px; width: 95%; margin: 0 auto;">
+        <div class="post-content" style="background: var(--card-bg); padding: 60px 80px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 10px 50px rgba(0,0,0,0.6); font-size: 1.25rem; line-height: 1.9; color: #ddd; min-height: 50vh;">
             <?= $post['content'] ?>
         </div>
         
@@ -55,8 +55,9 @@ if (!$post) {
             max-width: 100%;
             height: auto;
             border-radius: 8px;
-            margin: 20px 0;
+            margin: 30px 0;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            cursor: zoom-in;
         }
         .post-content h1, .post-content h2, .post-content h3 {
             font-family: var(--font-head);
@@ -83,5 +84,17 @@ if (!$post) {
     
     <div id="footer-placeholder"></div>
     <script src="js/script.js"></script>
+    
+    <!-- MediumZoom library for zooming images like on Medium.com -->
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            mediumZoom('.post-content img', {
+                margin: 24,
+                background: 'rgba(5, 5, 8, 0.95)',
+                scrollOffset: 0,
+            });
+        });
+    </script>
 </body>
 </html>
