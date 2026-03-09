@@ -22,7 +22,7 @@ if (!$post) {
 </head>
 <body>
     <div id="nav-placeholder"></div>
-    <article class="section" style="padding:40px; max-width:800px; margin:0 auto;">
+    <article class="section" style="padding-top:120px; padding-bottom:40px; padding-left:40px; padding-right:40px; max-width:800px; margin:0 auto;">
         <h1><?= htmlspecialchars($post['title']) ?></h1>
         <small><?= date('Y-m-d H:i', strtotime($post['created_at'])) ?></small>
         <div class="post-content">
