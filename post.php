@@ -11,13 +11,46 @@ if (!$post) {
     echo 'Wpis nie znaleziony.';
     exit;
 }
+
+// Przygotowanie danych do meta tagów
+$plain_text = strip_tags($post['content']);
+// Usunięcie nadmiarowych białych znaków i przycięcie do ok. 150 znaków
+$og_description = mb_strimwidth(trim(preg_replace('/\s+/', ' ', $plain_text)), 0, 150, '...');
+
+// Domyślne zdjęcie (np. logo lub tło strony)
+$og_image = 'https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?q=80&w=2000'; 
+// Wyszukanie pierwszego tagu <img> w treści posta
+if (preg_match('/<img.+src=[\'"](?P<src>.+?)[\'"].*>/i', $post['content'], $match)) {
+    $og_image = $match['src'];
+}
+
+// Pobranie aktualnego URL dla og:url
+$current_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
 ?>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($post['title']) ?></title>
+    <title><?= htmlspecialchars($post['title']) ?> - HYPEwR</title>
+    
+    <!-- Dynamiczne Meta Tagi SEO / Open Graph -->
+    <meta name="description" content="<?= htmlspecialchars($og_description) ?>">
+    
+    <!-- Open Graph (Facebook, LinkedIn, Discord etc) -->
+    <meta property="og:title" content="<?= htmlspecialchars($post['title']) ?>">
+    <meta property="og:description" content="<?= htmlspecialchars($og_description) ?>">
+    <meta property="og:image" content="<?= htmlspecialchars($og_image) ?>">
+    <meta property="og:url" content="<?= htmlspecialchars($current_url) ?>">
+    <meta property="og:type" content="article">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?= htmlspecialchars($post['title']) ?>">
+    <meta name="twitter:description" content="<?= htmlspecialchars($og_description) ?>">
+    <meta name="twitter:image" content="<?= htmlspecialchars($og_image) ?>">
+    
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
