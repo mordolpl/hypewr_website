@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         body {
             margin: 0;
             padding: 0;
-            background: #f0f2f5;
+            background: var(--body-bg);
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -71,9 +71,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             height: 100vh;
             max-width: none !important; /* Nadpisuje limit z admin-style.css */
             margin: 0 !important;       /* Nadpisuje center margin z admin-style.css */
-            padding: 20px;
+            padding: 40px;
             box-sizing: border-box;
-            background: #fff;
+            background: var(--body-bg);
         }
         form {
             display: flex;
@@ -88,7 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         .header-row h1 {
             margin: 0;
-            color: #333;
+            color: var(--text-main);
+            font-size: 1.75rem;
         }
         .header-row a, .header-row button {
             padding: 10px 20px;
@@ -100,13 +101,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-size: 14px;
         }
         .header-row a {
-            background: #eee;
-            color: #333;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
             margin-right: 10px;
+            border: 1px solid var(--border-color);
+        }
+        .header-row a:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
         .header-row button {
-            background: #007bff;
+            background: var(--primary-color);
             color: #fff;
+        }
+        .header-row button:hover {
+            background: var(--primary-hover);
         }
         .title-input {
             width: 100%;
@@ -127,21 +135,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             /* Odejmujemy marginesy i tytuł żeby idealnie wpasować edytor */
         }
         .ql-toolbar.ql-snow {
-            border-radius: 5px 5px 0 0;
-            background: #f8f9fa;
+            border-radius: 8px 8px 0 0;
+            background: var(--card-bg);
+            border-color: var(--border-color);
+        }
+        .ql-toolbar.ql-snow .ql-stroke {
+            stroke: var(--text-main) !important;
+        }
+        .ql-toolbar.ql-snow .ql-fill {
+            fill: var(--text-main) !important;
+        }
+        .ql-toolbar.ql-snow .ql-picker {
+            color: var(--text-main) !important;
         }
         .ql-container.ql-snow {
-            border-radius: 0 0 5px 5px;
-            background: #fff;
+            border-radius: 0 0 8px 8px;
+            background: var(--card-bg);
+            border-color: var(--border-color);
             flex-grow: 1;
             display: flex;
             flex-direction: column;
         }
         .ql-editor {
             flex-grow: 1;
-            font-size: 16px;
-            color: #000;
-            overflow-y: auto; /* Fix for scrolling */
+            font-size: 1.1rem;
+            color: var(--text-main);
+            overflow-y: auto;
             max-height: calc(100vh - 200px); /* Limit height so toolbar stays visible */
         }
     </style>
@@ -167,11 +186,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="text" class="title-input" id="title" name="title" placeholder="Wpisz tytuł artykułu..." value="<?= htmlspecialchars($post['title']) ?>" required>
         
         <div style="display: flex; gap: 20px;">
-            <input type="text" class="title-input" id="author" name="author" placeholder="Autor publikacji..." value="<?= htmlspecialchars($post['author']) ?>" style="font-size: 1rem; padding: 10px; margin-bottom: 20px; flex: 1;">
+            <input type="text" class="title-input" id="author" name="author" placeholder="Autor publikacji..." value="<?= htmlspecialchars($post['author']) ?>" style="font-size: 1rem; padding: 15px 0; margin-bottom: 20px; flex: 1;">
             
             <div style="flex: 2; display: flex; flex-direction: column;">
-                <input type="text" class="title-input" id="cover_image_url" placeholder="URL okładki (lub wgraj plik poniżej) -> domyślnie kosmos" value="<?= htmlspecialchars($post['cover_image']) ?>" style="font-size: 1rem; padding: 10px; margin-bottom: 5px;">
-                <input type="file" id="cover_image_file" accept="image/*" style="font-size: 0.9rem; margin-bottom: 20px;">
+                <input type="text" class="title-input" id="cover_image_url" placeholder="URL okładki (lub wgraj plik poniżej) -> domyślnie kosmos" value="<?= htmlspecialchars($post['cover_image']) ?>" style="font-size: 1rem; padding: 15px 0; margin-bottom: 5px;">
+                <input type="file" id="cover_image_file" accept="image/*" style="font-size: 0.9rem; margin-bottom: 20px; color: var(--text-muted);">
                 <input type="hidden" name="cover_image" id="cover_image_hidden" value="<?= htmlspecialchars($post['cover_image']) ?>">
             </div>
         </div>

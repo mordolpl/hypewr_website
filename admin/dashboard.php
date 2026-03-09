@@ -62,8 +62,8 @@ $posts = getPosts();
                     <td><?= htmlspecialchars($p['title']) ?></td>
                     <td><?= htmlspecialchars($p['author'] ?? 'Administrator') ?></td>
                     <td><?= htmlspecialchars($p['created_at']) ?></td>
-                    <td>
-                        <a href="post_form.php?id=<?= $p['id'] ?>">Edytuj</a>
+                    <td style="display: flex; gap: 10px; border-bottom: none;">
+                        <a href="post_form.php?id=<?= $p['id'] ?>" class="edit-btn">Edytuj</a>
                         <a href="?delete=<?= $p['id'] ?>" class="danger" onclick="return confirm('Usuń wpis?');">Usuń</a>
                     </td>
                 </tr>
