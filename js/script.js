@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setTimeout(() => {
             window.location.href = targetUrl;
-        }, 200); // 0.2s duration matches CSS transition
+        }, 100); // 0.1s duration matches CSS transition
     });
     
     // --- 1. SŁOWNIK TŁUMACZEŃ ---
