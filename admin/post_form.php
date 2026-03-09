@@ -138,6 +138,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             flex-grow: 1;
             font-size: 16px;
             color: #000;
+            overflow-y: auto; /* Fix for scrolling */
+            max-height: calc(100vh - 200px); /* Limit height so toolbar stays visible */
         }
     </style>
 </head>
