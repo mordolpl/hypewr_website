@@ -15,15 +15,15 @@ function getPostById(int $id): ?array {
     return $row ? $row : null;
 }
 
-function createPost(string $title, string $content): int {
-    $stmt = db()->prepare('INSERT INTO posts(title, content, created_at) VALUES(:title, :content, now()) RETURNING id');
-    $stmt->execute([':title' => $title, ':content' => $content]);
+function createPost(string $title, string $content, string $author = 'Administrator'): int {
+    $stmt = db()->prepare('INSERT INTO posts(title, content, author, created_at) VALUES(:title, :content, :author, now()) RETURNING id');
+    $stmt->execute([':title' => $title, ':content' => $content, ':author' => $author]);
     return (int)$stmt->fetchColumn();
 }
 
-function updatePost(int $id, string $title, string $content): bool {
-    $stmt = db()->prepare('UPDATE posts SET title = :title, content = :content, updated_at = now() WHERE id = :id');
-    return $stmt->execute([':title' => $title, ':content' => $content, ':id' => $id]);
+function updatePost(int $id, string $title, string $content, string $author): bool {
+    $stmt = db()->prepare('UPDATE posts SET title = :title, content = :content, author = :author, updated_at = now() WHERE id = :id');
+    return $stmt->execute([':title' => $title, ':content' => $content, ':author' => $author, ':id' => $id]);
 }
 
 function deletePost(int $id): bool {
