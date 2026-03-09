@@ -294,3 +294,48 @@ footer {
     width: 100%;
     text-align: center;
 }
+
+/* --- PAGE TRANSITION ANIMATION (TRAIN) --- */
+.train-transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg-color);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Logo will stick to the right edge */
+    pointer-events: none; /* Let clicks pass through when hidden */
+    transform: translateX(100vw); /* Hidden off-screen to the right initially */
+}
+
+/* The logo "locomotive" */
+.train-transition-overlay img {
+    height: 100px; /* Adjust size as needed */
+    margin-right: 50px;
+    filter: drop-shadow(0 0 20px var(--accent-primary));
+}
+
+/* Slide IN animation (covering the screen from left to right) */
+.train-transition-overlay.slide-in {
+    animation: trainSlideIn 0.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+    pointer-events: all; /* Block clicks while transitioning */
+}
+
+/* Slide OUT animation (revealing the screen from left to right) */
+.train-transition-overlay.slide-out {
+    animation: trainSlideOut 0.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+    pointer-events: none;
+}
+
+@keyframes trainSlideIn {
+    0% { transform: translateX(-100vw); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes trainSlideOut {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(100vw); }
+}

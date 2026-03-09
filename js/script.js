@@ -1,5 +1,60 @@
 document.addEventListener('DOMContentLoaded', () => {
     
+    // --- 0. PAGE TRANSITION (TRAIN ANIMATION) ---
+    // Determine base path for the logo depending on where we are
+    const isInPages = window.location.pathname.includes('/pages/') || window.location.href.includes('pages');
+    const imageBasePath = isInPages ? '../media/images/' : 'media/images/';
+    
+    // Inject overlay HTML into body
+    const overlayHtml = `
+        <div id="train-transition" class="train-transition-overlay">
+            <img src="${imageBasePath}logo.png" alt="Hyper Train Logo">
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', overlayHtml);
+    const transitionOverlay = document.getElementById('train-transition');
+
+    // On page load, play the slide-out animation to reveal the content
+    // We remove the class after it finishes so it's ready for slide-in
+    transitionOverlay.classList.add('slide-out');
+    setTimeout(() => {
+        transitionOverlay.classList.remove('slide-out');
+    }, 500); // matches the 0.5s CSS animation
+
+    // Intercept internal link clicks
+    document.addEventListener('click', (e) => {
+        // Find the closest anchor tag in case they clicked an icon inside it
+        const link = e.target.closest('a');
+        if (!link) return;
+        
+        const targetUrl = link.getAttribute('href');
+        
+        // Ignore links that shouldn't trigger the transition
+        if (
+            !targetUrl || 
+            targetUrl.startsWith('#') || // anchors
+            targetUrl.startsWith('mailto:') || // emails
+            targetUrl.startsWith('tel:') || // phones
+            link.target === '_blank' || // new tabs
+            // Ignore external links (make sure it's same origin or a relative path)
+            (targetUrl.startsWith('http') && !targetUrl.includes(window.location.hostname)) 
+        ) {
+            return;
+        }
+
+        // Prevent immediate navigation
+        e.preventDefault();
+
+        // Start slide-in animation to cover the screen
+        transitionOverlay.classList.remove('slide-out');
+        transitionOverlay.classList.add('slide-in');
+
+        // Wait for animation to finish, then navigate
+        setTimeout(() => {
+            window.location.href = targetUrl;
+        }, 500); // 0.5s duration
+    });
+    
     // --- 1. SŁOWNIK TŁUMACZEŃ ---
     const translations = {
         "pl": {
