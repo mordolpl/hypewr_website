@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $edit ? 'Edytuj wpis' : 'Dodaj wpis' ?></title>
-    <link rel="stylesheet" href="admin-style.css">
+    <link rel="stylesheet" href="admin-style.css?v=<?= time() ?>">
     
     <!-- Quill CSS & JS -->
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
