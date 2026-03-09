@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="${currentPath === 'index.html' ? 'index.html' : '../index.html'}" class="${currentPath === 'index.html' ? 'active' : ''}" data-i18n="nav_home">Home</a>
                     <a href="${currentPath === 'index.html' ? 'pages/projekty.php' : 'projekty.php'}" class="${currentPath === 'projekty.php' || currentPath === 'projekty.html' || currentPath === 'post.php' ? 'active' : ''}" data-i18n="nav_projects">Projekty</a>
                     <a href="${currentPath === 'index.html' ? 'pages/rekrutacja.html' : 'rekrutacja.html'}" class="${currentPath === 'rekrutacja.html' ? 'active' : ''}" data-i18n="nav_recruitment">Rekrutacja</a>
-                    <a href="${currentPath === 'index.html' ? 'pages/kontakt.html' : 'kontakt.html'}" class="${currentPath === 'kontakt.html' ? 'active' : ''}" data-i18n="nav_contact">Kontakt</a>
+                    <a href="${currentPath === 'index.html' ? 'pages/kontakt.php' : 'kontakt.php'}" class="${currentPath === 'kontakt.php' ? 'active' : ''}" data-i18n="nav_contact">Kontakt</a>
                 </div>
 
                 <div class="lang-switch">
