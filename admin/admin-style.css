@@ -235,3 +235,68 @@ td:last-child {
 .admin-header a:hover {
     color: var(--text-main);
 }
+
+/* --- RWD ADMIN PANEL --- */
+@media (max-width: 768px) {
+    body {
+        padding: 20px 10px;
+    }
+    
+    .container {
+        padding: 20px;
+        box-shadow: none;
+    }
+    
+    .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding-bottom: 15px;
+    }
+    
+    .form-box, .login-box {
+        padding: 30px 20px;
+        margin: 20px auto;
+        box-shadow: none;
+        width: 100%;
+    }
+    
+    .header-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    /* Make the dashboard stats stack */
+    .dashboard-stats {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* Wrap table for scrolling */
+    .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin-top: 20px;
+        width: 100%;
+        border-radius: 6px;
+        border: 1px solid var(--border-color);
+    }
+    
+    table {
+        margin-top: 0;
+        min-width: 600px; /* Force scroll instead of squishing */
+    }
+    
+    /* Force inputs side-by-side to stack in post_form */
+    #post-form .flex-row {
+        flex-direction: column !important;
+    }
+    
+    #post-form input.title-input {
+        font-size: 1.4rem;
+    }
+    
+    .ql-editor {
+        padding: 15px !important;
+    }
+}

@@ -128,6 +128,21 @@ if ($reading_time_minutes < 1) $reading_time_minutes = 1;
             margin-left: 0;
             font-style: italic;
             color: #bbb;
+            flex-direction: column;
+        }
+        
+        /* Mobile overrides */
+        @media (max-width: 900px) {
+            .post-content {
+                padding: 30px 20px;
+                font-size: 1.1rem;
+            }
+            .post-header h1 {
+                font-size: 2.5rem;
+            }
+            .post-header {
+                padding: 100px 5% 50px 5%;
+            }
         }
     </style>
     

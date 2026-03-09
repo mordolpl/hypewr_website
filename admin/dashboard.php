@@ -67,7 +67,7 @@ $lastUpdate = $lastUpdateRow ? date('d.m.Y', strtotime($lastUpdateRow)) : 'Nigdy
     <p><a href="post_form.php" class="button">Dodaj nowy wpis</a></p>
 
     <!-- DASHBOARD STATS ROW -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 40px; margin-top: 30px;">
+    <div class="dashboard-stats" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 40px; margin-top: 30px;">
         <div style="background: #fff; border: 1px solid var(--border-color); border-radius: 8px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: center;">
             <span style="color: var(--text-muted); font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Razem Wpisów</span>
             <span style="color: var(--text-main); font-size: 2.2rem; font-weight: 700;"><?= $totalPosts ?></span>
@@ -88,25 +88,27 @@ $lastUpdate = $lastUpdateRow ? date('d.m.Y', strtotime($lastUpdateRow)) : 'Nigdy
     <?php if (count($posts) === 0): ?>
         <p>Brak wpisów w bazie.</p>
     <?php else: ?>
-        <table>
-            <thead>
-            <tr><th>ID</th><th>Tytuł</th><th>Autor</th><th>Data</th><th>Akcje</th></tr>
-            </thead>
-            <tbody>
-            <?php foreach ($posts as $p): ?>
-                <tr>
-                    <td><?= $p['id'] ?></td>
-                    <td><?= htmlspecialchars($p['title']) ?></td>
-                    <td><?= htmlspecialchars($p['author'] ?? 'Administrator') ?></td>
-                    <td><?= htmlspecialchars($p['created_at']) ?></td>
-                    <td style="display: flex; gap: 10px; border-bottom: none;">
-                        <a href="post_form.php?id=<?= $p['id'] ?>" class="edit-btn">Edytuj</a>
-                        <a href="?delete=<?= $p['id'] ?>" class="danger" onclick="return confirm('Usuń wpis?');">Usuń</a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                <tr><th>ID</th><th>Tytuł</th><th>Autor</th><th>Data</th><th>Akcje</th></tr>
+                </thead>
+                <tbody>
+                <?php foreach ($posts as $p): ?>
+                    <tr>
+                        <td><?= $p['id'] ?></td>
+                        <td><?= htmlspecialchars($p['title']) ?></td>
+                        <td><?= htmlspecialchars($p['author'] ?? 'Administrator') ?></td>
+                        <td><?= htmlspecialchars($p['created_at']) ?></td>
+                        <td style="display: flex; gap: 10px; border-bottom: none;">
+                            <a href="post_form.php?id=<?= $p['id'] ?>" class="edit-btn">Edytuj</a>
+                            <a href="?delete=<?= $p['id'] ?>" class="danger" onclick="return confirm('Usuń wpis?');">Usuń</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     <?php endif; ?>
 </div>
 </body>

@@ -179,7 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form id="post-form" method="post" action="" style="height: 100%;">
         <input type="text" class="title-input" id="title" name="title" placeholder="Wpisz tytuł artykułu..." value="<?= htmlspecialchars($post['title']) ?>" required style="background: transparent;">
         
-        <div style="display: flex; gap: 20px;">
+        <div class="flex-row" style="display: flex; gap: 20px;">
             <div style="flex: 1; display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px;">
                 <input type="text" class="title-input" id="author" name="author" placeholder="Autor publikacji..." value="<?= htmlspecialchars($post['author']) ?>" style="font-size: 1.1rem; padding: 10px 0; background: transparent;">
                 
