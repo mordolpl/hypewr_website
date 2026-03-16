@@ -25,15 +25,15 @@
             <div style="display: flex; flex-direction: column;">
                 <h2 class="section-title" data-i18n="kontakt_napisz_do_nas">Napisz do nas</h2>
                 <div class="title-bar"></div>
-                <form class="card" style="height: auto; flex-grow: 1;">
+                <form class="card" method="POST" action="kontakt.php" style="height: auto; flex-grow: 1;">
                     <label style="display: block; margin-bottom: 5px;" data-i18n="kontakt_label_name">Imię i Nazwisko</label>
-                    <input type="text" data-i18n="form_name" name="name" placeholder="Jan Kowalski">
+                    <input type="text" data-i18n="form_name" name="name" placeholder="Jan Kowalski" required>
                     
                     <label style="display: block; margin-bottom: 5px;" data-i18n="kontakt_label_email">Adres E-mail</label>
-                    <input type="email" data-i18n="form_email" name="email" placeholder="email@przyklad.pl">
+                    <input type="email" data-i18n="form_email" name="email" placeholder="email@przyklad.pl" required>
                     
                     <label style="display: block; margin-bottom: 5px;" data-i18n="kontakt_label_message">Wiadomość</label>
-                    <textarea rows="6" data-i18n="form_msg" name="message" placeholder="Treść wiadomości..."></textarea>
+                    <textarea rows="6" data-i18n="form_msg" name="message" placeholder="Treść wiadomości..." required></textarea>
                     
                     <button type="submit" class="cta-btn" data-i18n="form_btn" style="width: 100%; margin-top: auto;">Wyślij Wiadomość</button>
                 </form>
@@ -56,13 +56,15 @@
                     $email_content .= "Wiadomość:\n$message\n";
 
                     // 4. Nagłówki
-                    $headers = "From: $name <$email>";
+                    $headers = "From: strona@hypewr.pwr.edu.pl\r\n";
+                    $headers .= "Reply-To: $email\r\n";
+                    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
                     // 5. Wysyłka
                     if (mail($to, $subject, $email_content, $headers)) {
-                        echo "Dziękujemy! Wiadomość została wysłana.";
+                        echo "<p style='color: #4CAF50; font-weight: bold; margin-bottom: 20px;'>Dziękujemy! Wiadomość została wysłana.</p>";
                     } else {
-                        echo "Ups! Coś poszło nie tak.";
+                        echo "<p style='color: #F44336; font-weight: bold; margin-bottom: 20px;'>Ups! Coś poszło nie tak. Spróbuj ponownie później (funkcja mail może być zablokowana na serwerze).</p>";
                     }
                 }
             ?>
