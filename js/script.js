@@ -175,7 +175,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 2. GENEROWANIE NAWIGACJI (Z obsługą i18n) ---
     const navPlaceholder = document.getElementById('nav-placeholder');
     if (navPlaceholder) {
-        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+        let currentPath = window.location.pathname.split('/').pop() || '';
+        // If there's no extension and not empty, it could be the clean URL
+        // If it's a subfolder, it might end up being 'hypewr_website' if accessed via http://localhost/hypewr_website/
+        // To be safe, let's just use simple checks for highlighting.
+        const isHome = currentPath === '' || currentPath === 'index.html' || currentPath === 'index' || currentPath === 'hypewr_website';
 
         navPlaceholder.innerHTML = `
         <nav>
@@ -189,10 +193,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             <div class="nav-container" id="navMenu">
                 <div class="nav-links">
-                    <a href="${currentPath === 'index.html' ? 'index.html' : '../index.html'}" class="${currentPath === 'index.html' ? 'active' : ''}" data-i18n="nav_home">Home</a>
-                    <a href="${currentPath === 'index.html' ? 'pages/projekty.php' : 'projekty.php'}" class="${currentPath === 'projekty.php' || currentPath === 'projekty.html' || currentPath === 'post.php' ? 'active' : ''}" data-i18n="nav_projects">Projekty</a>
-                    <a href="${currentPath === 'index.html' ? 'pages/rekrutacja.html' : 'rekrutacja.html'}" class="${currentPath === 'rekrutacja.html' ? 'active' : ''}" data-i18n="nav_recruitment">Rekrutacja</a>
-                    <a href="${currentPath === 'index.html' ? 'pages/kontakt.php' : 'kontakt.php'}" class="${currentPath === 'kontakt.php' ? 'active' : ''}" data-i18n="nav_contact">Kontakt</a>
+                    <a href="./" class="${isHome ? 'active' : ''}" data-i18n="nav_home">Home</a>
+                    <a href="projekty" class="${currentPath.includes('projekt') || currentPath === 'post.php' || currentPath === 'post' ? 'active' : ''}" data-i18n="nav_projects">Projekty</a>
+                    <a href="rekrutacja" class="${currentPath.includes('rekrutacja') ? 'active' : ''}" data-i18n="nav_recruitment">Rekrutacja</a>
+                    <a href="kontakt" class="${currentPath.includes('kontakt') ? 'active' : ''}" data-i18n="nav_contact">Kontakt</a>
                 </div>
 
                 <div class="lang-switch">
@@ -207,9 +211,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 3. GENEROWANIE STOPKI (Z obsługą i18n) ---
     const footerPlaceholder = document.getElementById('footer-placeholder');
     if (footerPlaceholder) {
-        // Determine base path for images based on current page location
-        const isInPages = window.location.pathname.includes('/pages/') || window.location.href.includes('pages');
-        const imageBasePath = isInPages ? '../media/images/' : 'media/images/';
+        // Since we use clean URLs, images are just in media/images/ from the root context
+        const imageBasePath = 'media/images/';
         
         footerPlaceholder.innerHTML = `
         <footer>

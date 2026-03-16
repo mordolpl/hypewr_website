@@ -56,7 +56,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="projekty_title">HYPER | Projekty</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="scroll-track-container"><div class="scroll-pod-indicator" id="scrollPod"></div></div>
@@ -118,7 +118,7 @@ try {
                         <p class="card-description" style="color: var(--text-muted); margin-bottom: 25px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
                             <?= htmlspecialchars(strip_tags($post['content'])) ?>
                         </p>
-                        <a href="../post.php?id=<?= $post['id'] ?>" class="cta-btn outline card-cta" style="width: 100%; text-align: center; margin-top: auto;">Czytaj więcej</a>
+                        <a href="post?id=<?= $post['id'] ?>" class="cta-btn outline card-cta" style="width: 100%; text-align: center; margin-top: auto;">Czytaj więcej</a>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -160,6 +160,6 @@ try {
     </section>
 
     <div id="footer-placeholder"></div>
-    <script src="../js/script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
